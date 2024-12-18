@@ -24,7 +24,7 @@ export default function Home() {
         <div className="bg-gradient-to-r from-primary to-secondary-foreground text-transparent bg-clip-text relative">
           <h1 className="text-9xl font-bold text-center">CRM</h1>
         </div>
-        <div className="flex justify-center items-center relative md:mt-[-70px]">
+        {/* <div className="flex justify-center items-center relative md:mt-[-70px]">
           <Image
             src={"/assets/preview.png"}
             alt="banner image"
@@ -33,7 +33,7 @@ export default function Home() {
             className="rounded-tl-2xl rounded-tr-2xl border-2 border-muted"
           />
           <div className="bottom-0 top-[50%] bg-gradient-to-t dark:from-background left-0 right-0 absolute z-10"></div>
-        </div>
+        </div> */}
       </section>
 
       <section className="flex justify-center items-center flex-col gap-4 md:!mt-20 mt-[-60px]">
