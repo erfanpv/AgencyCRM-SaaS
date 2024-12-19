@@ -1,4 +1,4 @@
-import Navigation from "@/components/site/navigation";
+import Navigation from "@/components/modules/landing/Navigation";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import React from "react";
