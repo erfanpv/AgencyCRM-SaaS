@@ -51,6 +51,7 @@ import { Input } from "../ui/input";
 import { Switch } from "../ui/switch";
 import { Button } from "../ui/button";
 import FileUpload from "../global/FileUpload";
+import axios from "axios";
 
 import {
   AgencyDetailsValidator,
@@ -83,11 +84,13 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
     }
   }, [data]);
 
+  // Example in your AgencyDetails component
+
   const onSubmit: SubmitHandler<AgencyDetailsSchema> = async (values) => {
     try {
       let customerId: string | undefined;
-      console.log(values);
       if (!data?.id) {
+
         // create Stripe customer if there is no agency
         const bodyData = {
           email: values.companyEmail,
@@ -113,9 +116,11 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
       }
 
       await initUser({ role: Role.AGENCY_OWNER });
-      if (!data?.customerId && !customerId) return;
 
-      const response = await upsertAgency({
+      // if (!data?.customerId && !customerId) return;
+
+      // Prepare agency data to be sent to the server
+      const agencyData = {
         id: data?.id ? data.id : uuidv4(),
         customerId: data?.customerId || customerId || "",
         address: values.address,
@@ -132,16 +137,20 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
         companyEmail: values.companyEmail,
         connectAccountId: "",
         goal: 5,
+      };
+
+      const response = await axios.post("/api/upsert-agency", {
+        agency: agencyData,
       });
+      console.log("Agency upserted:", response.data);
 
       toast.success("Created Agency");
 
       if (data?.id) router.refresh();
-      if (response) router.refresh();
+      if (response.data) router.refresh();
     } catch (error) {
-      toast.error("Oppsie!", {
-        description: "Could not create your agency. Please try again.",
-      });
+      toast.error("Oops! Could not create your agency. Please try again.");
+      console.error("Error:", error);
     }
   };
 
