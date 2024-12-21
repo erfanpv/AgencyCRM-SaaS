@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
-const page = () => {
-  return (
-    <div>page</div>
-  )
-}
+const AgencyIdPage = ({ params }: { params: { agencyId: string } }) => {
+  return <div>{params.agencyId}</div>;
+};
 
-export default page
+export default AgencyIdPage;
