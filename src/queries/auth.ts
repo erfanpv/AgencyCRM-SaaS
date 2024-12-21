@@ -1,5 +1,6 @@
 "use server";
-import { clerkClient, currentUser } from "@clerk/nextjs/server";
+import {  currentUser } from "@clerk/nextjs/server";
+import { clerkClient } from '@clerk/clerk-sdk-node';
 import { db } from "@/lib/db";
 import { Role, User } from "@prisma/client";
 
@@ -61,7 +62,7 @@ export const initUser = async (newUser: Partial<User>) => {
     },
   });
 
-  await (clerkClient as any).users.updateUserMetadata(user.id, {
+  await clerkClient.users.updateUserMetadata(user.id, {
     privateMetadata: {
       role: newUser.role || Role.SUBACCOUNT_USER,
     },
