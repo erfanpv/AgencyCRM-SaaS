@@ -1,6 +1,8 @@
 "use server";
 import { currentUser } from "@clerk/nextjs/server";
 import { db } from "@/lib/db";
+import { logger } from "@/lib/utils";
+import { type NotificationsWithUser } from "@/lib/types";
 
 // Logs activity and saves it as notifications in the database.
 export const saveActivityLogsNotification = async ({
@@ -85,5 +87,26 @@ export const saveActivityLogsNotification = async ({
         },
       },
     });
+  }
+};
+
+//get notifications
+export const getNotification = async (agencyId: string) => {
+  try {
+    const response = await db.notification.findMany({
+      where: {
+        agencyId,
+      },
+      include: {
+        User: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return response;
+  } catch (error) {
+    logger(error);
   }
 };
