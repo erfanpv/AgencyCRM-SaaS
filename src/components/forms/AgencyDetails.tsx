@@ -12,7 +12,6 @@ import { v4 as uuidv4 } from "uuid";
 import {
   deleteAgency,
   updateAgencyDetails,
-  upsertAgency,
 } from "@/queries/agency";
 import { saveActivityLogsNotification } from "@/queries/notification";
 import { initUser } from "@/queries/auth";
