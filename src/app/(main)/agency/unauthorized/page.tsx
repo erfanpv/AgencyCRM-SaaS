@@ -1,10 +1,6 @@
 import Unauthorized from "@/components/global/Unauthorized";
 import React from "react";
 
-type Props = {};
+const UnauthorizedPage: React.FC = () => <Unauthorized />;
 
-const Page = (props: Props) => {
-  return <Unauthorized />;
-};
-
-export default Page;
+export default UnauthorizedPage;
