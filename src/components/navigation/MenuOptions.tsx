@@ -99,7 +99,6 @@ const MenuOptions: React.FC<MenuOptionsProps> = ({
               className="rounded-md object-contain"
             />
           </AspectRatio>
-
           <Popover>
             <PopoverTrigger asChild>
               <Button
@@ -234,27 +233,25 @@ const MenuOptions: React.FC<MenuOptionsProps> = ({
                   </CommandList>
                 </ScrollArea>
                 {isOwnerOrAdmin && (
-                  <SheetClose>
-                    <Button
-                      onClick={() =>
-                        setOpen(
-                          <CustomModal
-                            title="Create A Subaccount"
-                            subTitle="You can switch between your agency account and the subaccount from the sidebar"
-                          >
-                            <SubAccountDetails
-                            // agencyDetails={user.agency!}
-                            // userId={user.id}
-                            // userName={user.name}
-                            />
-                          </CustomModal>
-                        )
-                      }
-                      className="w-full flex items-center gap-2 mt-4"
-                    >
-                      <PlusCircle aria-hidden className="w-4 h-4" />
-                      Create Sub Account
-                    </Button>
+                  <SheetClose asChild>
+                    <div>
+                      <Button
+                        onClick={() =>
+                          setOpen(
+                            <CustomModal
+                              title="Create A Subaccount"
+                              subTitle="You can switch between your agency account and the subaccount from the sidebar"
+                            >
+                              <SubAccountDetails />
+                            </CustomModal>
+                          )
+                        }
+                        className="w-full flex items-center gap-2 mt-4"
+                      >
+                        <PlusCircle aria-hidden className="w-4 h-4" />
+                        Create Sub Account
+                      </Button>
+                    </div>
                   </SheetClose>
                 )}
               </Command>
