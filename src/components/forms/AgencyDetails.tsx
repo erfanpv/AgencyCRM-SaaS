@@ -52,10 +52,7 @@ import { Button } from "../ui/button";
 import FileUpload from "../global/FileUpload";
 import axios from "axios";
 
-import {
-  AgencyDetailsValidator,
-  type AgencyDetailsSchema,
-} from "@/lib/validators/agency-details";
+import { AgencyDetailsValidator, type AgencyDetailsSchema} from "@/lib/validators/agency-details";
 
 interface AgencyDetailsProps {
   data?: Partial<Agency>;
@@ -119,6 +116,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
       // if (!data?.customerId && !customerId) return;
 
       // Prepare agency data to be sent to the server
+      console.log(values)
       const agencyData = {
         id: data?.id ? data.id : uuidv4(),
         customerId: data?.customerId || customerId || "",
@@ -135,13 +133,12 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
         updatedAt: new Date(),
         companyEmail: values.companyEmail,
         connectAccountId: "",
-        goal: 5,
+        goal:5,
       };
 
       const response = await axios.post("/api/upsert-agency", {
         agency: agencyData,
       });
-      console.log("Agency upserted:", response.data);
 
       toast.success("Created Agency");
 
@@ -192,7 +189,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
-                disabled={isSubmitting}
+                // disabled={isSubmitting}
                 control={form.control}
                 name="agencyLogo"
                 render={({ field }) => (
@@ -211,7 +208,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
               />
               <div className="flex md:flex-row gap-4">
                 <FormField
-                  disabled={isSubmitting}
+                  // disabled={isSubmitting}
                   control={form.control}
                   name="name"
                   render={({ field }) => (
@@ -225,7 +222,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
                   )}
                 />
                 <FormField
-                  disabled={isSubmitting}
+                  // disabled={isSubmitting}
                   control={form.control}
                   name="companyEmail"
                   render={({ field }) => (
@@ -240,7 +237,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
                 />
               </div>
               <FormField
-                disabled={isSubmitting}
+                // disabled={isSubmitting}
                 control={form.control}
                 name="companyPhone"
                 render={({ field }) => (
@@ -257,7 +254,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
                 )}
               />
               <FormField
-                disabled={isSubmitting}
+                // disabled={isSubmitting}
                 control={form.control}
                 name="whiteLabel"
                 render={({ field }) => {
@@ -284,7 +281,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
                 }}
               />
               <FormField
-                disabled={isSubmitting}
+                // disabled={isSubmitting}
                 control={form.control}
                 name="address"
                 render={({ field }) => (
@@ -299,7 +296,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
               />
               <div className="flex md:flex-row gap-4">
                 <FormField
-                  disabled={isSubmitting}
+                  // disabled={isSubmitting}
                   control={form.control}
                   name="city"
                   render={({ field }) => (
@@ -313,7 +310,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
                   )}
                 />
                 <FormField
-                  disabled={isSubmitting}
+                  // disabled={isSubmitting}
                   control={form.control}
                   name="state"
                   render={({ field }) => (
@@ -327,7 +324,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
                   )}
                 />
                 <FormField
-                  disabled={isSubmitting}
+                  // disabled={isSubmitting}
                   control={form.control}
                   name="zipCode"
                   render={({ field }) => (
@@ -342,7 +339,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
                 />
               </div>
               <FormField
-                disabled={isSubmitting}
+                // disabled={isSubmitting}
                 control={form.control}
                 name="country"
                 render={({ field }) => (
@@ -374,8 +371,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
                       }
 
                       await updateAgencyDetails(data?.id, { goal: value });
-                      await saveActivityLogsNotification({
-                        description: `Updated the agency goal to | ${value} Sub Account`,
+                      await saveActivityLogsNotification({agencyId: data?.id,description: `Updated the agency goal to | ${value} Sub Account`,
                       });
 
                       router.refresh();
@@ -387,7 +383,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
                 <Button
                   type="submit"
                   // isLoading={isSubmitting}
-                  disabled={isSubmitting}
+                  // disabled={isSubmitting}
                 >
                   Save Agency Information
                 </Button>
