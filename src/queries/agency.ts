@@ -1,21 +1,50 @@
 "use server"
+
 import { db } from "@/lib/db";
+import { logger } from "@/lib/utils";
+import { AgencyDetailsSchema } from "@/lib/validators/agency-details";
 import { Agency, Plan } from "@prisma/client";
 
+
+export const getAgencyDetails = async (agencyId: string) => {
+  try {
+    const agencyDetails = await db.agency.findUnique({
+      where: {
+        id: agencyId,
+      },
+      include: {
+        SubAccount: true,
+      },
+    });
+
+    if (!agencyDetails) throw new Error("Agency not found");
+
+    return agencyDetails;
+  } catch (error) {
+    logger(error)
+  }
+};
+
 //update agency details
-export const updateAgencyDetails = async (
-  agencyId: string,
-  agencyDetails: Partial<Agency>
-) => {
+export const updateAgencyDetails = async (agencyId: string, agencyDetails: Partial<AgencyDetailsSchema>) => {
+  if (!agencyDetails.goal) {
+    throw new Error("The `goal` field is required.");
+  }
+
   const response = await db.agency.update({
     where: {
       id: agencyId,
     },
-    data: agencyDetails,
+    data: {
+      ...agencyDetails,
+      goal: agencyDetails.goal,
+    },
   });
 
   return response;
 };
+
+
 
 //delete agency
 export const deleteAgency = async (agencyId: string) => {
