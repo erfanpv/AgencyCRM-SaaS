@@ -1,9 +1,9 @@
-import React from "react";
-import Image from "next/image";
-import { File, X } from "lucide-react";
-import { UploadDropzone } from "@/lib/uploadthing";
-import { fileRouter } from "@/app/api/uploadthing/core";
-import { Button } from "../ui/button";
+import React from 'react';
+import Image from 'next/image';
+import { File, X } from 'lucide-react';
+import { UploadDropzone } from '@/lib/uploadthing';
+import { fileRouter } from '@/app/api/uploadthing/core';
+import { Button } from '../ui/button';
 
 interface FileUploadProps {
   endpoint: keyof typeof fileRouter;
@@ -16,13 +16,13 @@ const FileUpload: React.FC<FileUploadProps> = ({
   onChange,
   value,
 }) => {
-  const fileFormat = value?.split(".").pop();
+  const fileFormat = value?.split('.').pop();
 
   if (value) {
     return (
-      <div className="flex flex-col justify-center items-center gap-2">
-        {fileFormat !== "pdf" ? (
-          <div className="relative w-40 h-40">
+      <div className="flex flex-col items-center justify-center gap-2">
+        {fileFormat !== 'pdf' ? (
+          <div className="relative h-40 w-40">
             <Image
               src={value}
               className="object-contain"
@@ -31,20 +31,20 @@ const FileUpload: React.FC<FileUploadProps> = ({
             />
           </div>
         ) : (
-          <div className="relative flex items-center p-2 mt-2 rounded-md bg-background/10">
+          <div className="relative mt-2 flex items-center rounded-md bg-background/10 p-2">
             <File aria-hidden />
             <a
               href={value}
               target="_blank"
               rel="noopener_noreffer"
-              className="ml-2 text-sm text-indigo-500 dark:text-indigo-400 hover:underline"
+              className="ml-2 text-sm text-indigo-500 hover:underline dark:text-indigo-400"
             >
               View PDF
             </a>
           </div>
         )}
         <Button
-          onClick={() => onChange("")}
+          onClick={() => onChange('')}
           variant="ghost"
           type="button"
           className="flex items-center gap-2"
@@ -57,14 +57,14 @@ const FileUpload: React.FC<FileUploadProps> = ({
   }
 
   return (
-    <div className="w-full bg-muted/30 rounded-md border border-dashed">
+    <div className="w-full rounded-md border border-dashed bg-muted/30">
       <UploadDropzone
         endpoint={endpoint}
-        className="rounded-md mt-0"
-        onClientUploadComplete={(res) => {
+        className="mt-0 rounded-md"
+        onClientUploadComplete={res => {
           onChange(res?.[0].url);
         }}
-        onUploadError={(error) => {
+        onUploadError={error => {
           console.log(error);
         }}
       />

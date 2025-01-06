@@ -1,18 +1,18 @@
-import React from "react";
-import { redirect } from "next/navigation";
-import Link from "next/link";
-import Stripe from "stripe";
-import { format } from "date-fns";
+import React from 'react';
+import { redirect } from 'next/navigation';
+import Link from 'next/link';
+import Stripe from 'stripe';
+import { format } from 'date-fns';
 import {
   Clipboard,
   Contact2,
   DollarSign,
   Goal,
   ShoppingCart,
-} from "lucide-react";
+} from 'lucide-react';
 
-import { getAgencyDetails } from "@/queries/agency";
-import { getSubAccountsByAgency } from "@/queries/subaccount";
+import { getAgencyDetails } from '@/queries/agency';
+import { getSubAccountsByAgency } from '@/queries/subaccount';
 // import { AreaChart } from "@/components/ui/area-chart";
 import {
   Card,
@@ -21,11 +21,11 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { Progress } from "@/components/ui/progress";
+} from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import { Progress } from '@/components/ui/progress';
 // import { CircleProgress } from "@/components/ui/circle-progress";
-import BlurPage from "@/components/global/BlurPage";
+import BlurPage from '@/components/global/BlurPage';
 
 // import { stripe } from "@/lib/stripe";
 
@@ -38,15 +38,15 @@ interface AgencyIdPageProps {
 const AgencyIdPage: React.FC<AgencyIdPageProps> = async ({ params }) => {
   const { agencyId } = params;
 
-  if (!agencyId) redirect("/agency/unauthorized");
+  if (!agencyId) redirect('/agency/unauthorized');
 
-  let currency: string = "USD";
-  let sessions: Stripe.Checkout.Session[] = [];
+  const currency: string = 'USD';
+  const sessions: Stripe.Checkout.Session[] = [];
   let totalClosedSessions;
   let totalPendingSessions;
-  let net: number = 0;
-  let potentialIncome: number = 0;
-  let closingRate: number = 0;
+  const net: number = 0;
+  const potentialIncome: number = 0;
+  const closingRate: number = 0;
 
   const currentDate = new Date().getFullYear();
   const startDate = new Date(`${currentDate}-01-01T00:00:00Z`).getTime() / 1000;
@@ -54,7 +54,7 @@ const AgencyIdPage: React.FC<AgencyIdPageProps> = async ({ params }) => {
 
   const agencyDetails = await getAgencyDetails(agencyId);
 
-  if (!agencyDetails) redirect("/agency/unauthorized");
+  if (!agencyDetails) redirect('/agency/unauthorized');
 
   const subAccounts = await getSubAccountsByAgency(agencyId);
 
@@ -115,7 +115,7 @@ const AgencyIdPage: React.FC<AgencyIdPageProps> = async ({ params }) => {
     <BlurPage>
       <div className="relative h-full">
         {!agencyDetails.connectAccountId && (
-          <div className="absolute -top-10 -left-10 right-0 bottom-0 z-30 flex items-center justify-center backdrop-blur-md bg-background/50">
+          <div className="absolute -left-10 -top-10 bottom-0 right-0 z-30 flex items-center justify-center bg-background/50 backdrop-blur-md">
             <Card>
               <CardHeader>
                 <CardTitle>Connect Your Stripe</CardTitle>
@@ -124,7 +124,7 @@ const AgencyIdPage: React.FC<AgencyIdPageProps> = async ({ params }) => {
                 </CardDescription>
                 <Link
                   href={`/agency/${agencyDetails.id}/launchpad`}
-                  className="p-2 w-fit bg-secondary text-white rounded-md flex items-center gap-2"
+                  className="flex w-fit items-center gap-2 rounded-md bg-secondary p-2 text-white"
                 >
                   <Clipboard />
                   Launch Pad
@@ -134,18 +134,18 @@ const AgencyIdPage: React.FC<AgencyIdPageProps> = async ({ params }) => {
           </div>
         )}
 
-        <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
-        <Separator className="mt-2 mb-6" />
+        <h1 className="mb-4 text-3xl font-bold">Dashboard</h1>
+        <Separator className="mb-6 mt-2" />
         <div className="flex flex-col gap-4 pb-6">
-          <div className="flex gap-4 flex-col xl:!flex-row">
-            <Card className="flex-1 relative">
+          <div className="flex flex-col gap-4 xl:!flex-row">
+            <Card className="relative flex-1">
               <CardHeader>
                 <CardDescription>Income</CardDescription>
                 <CardTitle className="text-4xl">
                   {net ? `${currency} ${net.toFixed(2)}` : `$0.00`}
                 </CardTitle>
                 <small className="text-xs text-muted-foreground">
-                  For the year {format(new Date(), "yyyy")}
+                  For the year {format(new Date(), 'yyyy')}
                 </small>
               </CardHeader>
               <CardContent className="text-sm text-muted-foreground">
@@ -153,7 +153,7 @@ const AgencyIdPage: React.FC<AgencyIdPageProps> = async ({ params }) => {
               </CardContent>
               <DollarSign className="absolute right-4 top-4 text-muted-foreground" />
             </Card>
-            <Card className="flex-1 relative">
+            <Card className="relative flex-1">
               <CardHeader>
                 <CardDescription>Potential Income</CardDescription>
                 <CardTitle className="text-4xl">
@@ -162,7 +162,7 @@ const AgencyIdPage: React.FC<AgencyIdPageProps> = async ({ params }) => {
                     : `$0.00`}
                 </CardTitle>
                 <small className="text-xs text-muted-foreground">
-                  For the year {format(new Date(), "yyyy")}
+                  For the year {format(new Date(), 'yyyy')}
                 </small>
               </CardHeader>
               <CardContent className="text-sm text-muted-foreground">
@@ -170,7 +170,7 @@ const AgencyIdPage: React.FC<AgencyIdPageProps> = async ({ params }) => {
               </CardContent>
               <DollarSign className="absolute right-4 top-4 text-muted-foreground" />
             </Card>
-            <Card className="flex-1 relative">
+            <Card className="relative flex-1">
               <CardHeader>
                 <CardDescription>Active Clients</CardDescription>
                 <CardTitle className="text-4xl">{subAccounts.length}</CardTitle>
@@ -180,7 +180,7 @@ const AgencyIdPage: React.FC<AgencyIdPageProps> = async ({ params }) => {
               </CardContent>
               <Contact2 className="absolute right-4 top-4 text-muted-foreground" />
             </Card>
-            <Card className="flex-1 relative">
+            <Card className="relative flex-1">
               <CardHeader>
                 <CardTitle>Agency Goal</CardTitle>
                 <CardDescription>
@@ -191,12 +191,12 @@ const AgencyIdPage: React.FC<AgencyIdPageProps> = async ({ params }) => {
                 </CardDescription>
               </CardHeader>
               <CardFooter>
-                <div className="flex flex-col w-full">
-                  <div className="flex justify-between items-center">
-                    <span className="text-muted-foreground text-sm">
+                <div className="flex w-full flex-col">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">
                       Current: {subAccounts.length}
                     </span>
-                    <span className="text-muted-foreground text-sm">
+                    <span className="text-sm text-muted-foreground">
                       Goal: {agencyDetails.goal}
                     </span>
                   </div>
@@ -208,8 +208,8 @@ const AgencyIdPage: React.FC<AgencyIdPageProps> = async ({ params }) => {
               <Goal className="absolute right-4 top-4 text-muted-foreground" />
             </Card>
           </div>
-          <div className="flex gap-4 xl:!flex-row flex-col">
-            <Card className="p-4 flex-1">
+          <div className="flex flex-col gap-4 xl:!flex-row">
+            <Card className="flex-1 p-4">
               <CardHeader>
                 <CardTitle>Transaction History</CardTitle>
               </CardHeader>
@@ -226,7 +226,7 @@ const AgencyIdPage: React.FC<AgencyIdPageProps> = async ({ params }) => {
                 showAnimation={true}
               /> */}
             </Card>
-            <Card className="xl:w-[400px] w-full">
+            <Card className="w-full xl:w-[400px]">
               <CardHeader>
                 <CardTitle>Conversions</CardTitle>
               </CardHeader>

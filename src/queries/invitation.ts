@@ -1,20 +1,20 @@
-"use server";
-import { db } from "@/lib/db";
-import { clerkClient, currentUser } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
-import { createTeamUser } from "./auth";
-import { saveActivityLogsNotification } from "./notification";
+'use server';
+import { db } from '@/lib/db';
+import { clerkClient, currentUser } from '@clerk/nextjs/server';
+import { redirect } from 'next/navigation';
+import { createTeamUser } from './auth';
+import { saveActivityLogsNotification } from './notification';
 
 // Handles accepting user invitations and linking them to an agency.
 export const verifyAndAcceptInvitation = async () => {
   const user = await currentUser();
 
-  if (!user) return redirect("/sign-in");
+  if (!user) return redirect('/sign-in');
 
   const invintationExists = await db.invitation.findUnique({
     where: {
       email: user.emailAddresses[0].emailAddress,
-      status: "PENDING",
+      status: 'PENDING',
     },
   });
 
@@ -43,14 +43,14 @@ export const verifyAndAcceptInvitation = async () => {
 
     await saveActivityLogsNotification({
       agencyId: invintationExists?.agencyId,
-      description: "Joined",
+      description: 'Joined',
       subaccountId: undefined,
     });
 
     if (userDetails) {
       await (clerkClient as any).users.updateUserMetadata(user.id, {
         privateMetadata: {
-          role: userDetails.role || "SUBACCOUNT_USER",
+          role: userDetails.role || 'SUBACCOUNT_USER',
         },
       });
 

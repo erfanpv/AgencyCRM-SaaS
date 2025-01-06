@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import {
   type User,
@@ -13,13 +13,13 @@ import {
   type Agency,
   type Permissions,
   Role,
-} from "@prisma/client";
-import { ChevronsUpDown, Compass, Menu, PlusCircle } from "lucide-react";
+} from '@prisma/client';
+import { ChevronsUpDown, Compass, Menu, PlusCircle } from 'lucide-react';
 
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
-import { Button } from "../ui/button";
-import { AspectRatio } from "../ui/aspect-ratio";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from '../ui/sheet';
+import { Button } from '../ui/button';
+import { AspectRatio } from '../ui/aspect-ratio';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import {
   Command,
   CommandEmpty,
@@ -27,16 +27,16 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "../ui/command";
-import { ScrollArea } from "../ui/scroll-area";
-import CustomModal from "../global/CustomModal";
-import SubAccountDetails from "../forms/SubAccountDetails";
+} from '../ui/command';
+import { ScrollArea } from '../ui/scroll-area';
+import CustomModal from '../global/CustomModal';
+import SubAccountDetails from '../forms/SubAccountDetails';
 
-import { cn } from "@/lib/utils";
-import { useModal } from "@/hooks/use-modal";
-import { Separator } from "../ui/separator";
-import { icons } from "../ui/icons";
-import clsx from "clsx";
+import { cn } from '@/lib/utils';
+import { useModal } from '@/hooks/use-modal';
+import { Separator } from '../ui/separator';
+import { icons } from '../ui/icons';
+import clsx from 'clsx';
 
 interface MenuOptionsProps {
   id: string;
@@ -74,20 +74,20 @@ const MenuOptions: React.FC<MenuOptionsProps> = ({
     <Sheet modal={false} open={defaultOpen ? true : undefined}>
       <SheetTrigger
         asChild
-        className="absolute left-4 top-4 z-[100] md:hidden flex"
+        className="absolute left-4 top-4 z-[100] flex md:hidden"
       >
         <Button size="icon" variant="outline">
           <Menu aria-label="Open Menu" />
         </Button>
       </SheetTrigger>
       <SheetContent
-        side={"left"}
+        side={'left'}
         className={clsx(
-          "bg-background/80 backdrop-blur-xl fixed top-0 border-r-[1px] p-6",
+          'fixed top-0 border-r-[1px] bg-background/80 p-6 backdrop-blur-xl',
           {
-            "hidden md:inline-block z-0 w-[300px]": defaultOpen,
-            "inline-block md:hidden z-[100] w-full": !defaultOpen,
-          }
+            'z-0 hidden w-[300px] md:inline-block': defaultOpen,
+            'z-[100] inline-block w-full md:hidden': !defaultOpen,
+          },
         )}
       >
         <div className="">
@@ -102,10 +102,10 @@ const MenuOptions: React.FC<MenuOptionsProps> = ({
           <Popover>
             <PopoverTrigger asChild>
               <Button
-                className="w-full my-4 flex items-center justify-between py-8"
+                className="my-4 flex w-full items-center justify-between py-8"
                 variant="ghost"
               >
-                <div className="flex items-center text-left gap-2">
+                <div className="flex items-center gap-2 text-left">
                   <Compass aria-hidden />
                   <div className="flex flex-col">
                     {details.name}
@@ -117,22 +117,22 @@ const MenuOptions: React.FC<MenuOptionsProps> = ({
                 <ChevronsUpDown className="h-4 w-4 text-muted-foreground" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="h-80 overflow-y-hidden mt-4 z-[200]">
+            <PopoverContent className="z-[200] mt-4 h-80 overflow-y-hidden">
               <Command>
                 <CommandInput placeholder="Search Accounts..." />
                 <ScrollArea className="rounded-md">
-                  <CommandList className="pb-16 overflow-y-hidden">
+                  <CommandList className="overflow-y-hidden pb-16">
                     <CommandEmpty>No results found.</CommandEmpty>
                     {isOwnerOrAdmin && user.agency && (
                       <CommandGroup
                         heading="Agency"
                         className="overflow-y-hidden"
                       >
-                        <CommandItem className="bg-transparent my-2 text-primary border border-border p-2 rounded-md hover:bg-muted transition-all">
+                        <CommandItem className="my-2 rounded-md border border-border bg-transparent p-2 text-primary transition-all hover:bg-muted">
                           {defaultOpen ? (
                             <Link
                               href={`/agency/${user.agency.id}`}
-                              className="flex gap-4 w-full h-full"
+                              className="flex h-full w-full gap-4"
                             >
                               <div className="relative w-10">
                                 <Image
@@ -142,7 +142,7 @@ const MenuOptions: React.FC<MenuOptionsProps> = ({
                                   className="rounded-md object-contain"
                                 />
                               </div>
-                              <div className="flex flex-col flex-1">
+                              <div className="flex flex-1 flex-col">
                                 {user.agency.name}
                                 <span className="text-muted-foreground">
                                   {user.agency.address}
@@ -153,7 +153,7 @@ const MenuOptions: React.FC<MenuOptionsProps> = ({
                             <SheetClose asChild>
                               <Link
                                 href={`/agency/${user.agency.id}`}
-                                className="flex gap-4 w-full h-full"
+                                className="flex h-full w-full gap-4"
                               >
                                 <div className="relative w-10">
                                   <Image
@@ -163,7 +163,7 @@ const MenuOptions: React.FC<MenuOptionsProps> = ({
                                     className="rounded-md object-contain"
                                   />
                                 </div>
-                                <div className="flex flex-col flex-1">
+                                <div className="flex flex-1 flex-col">
                                   {user.agency.name}
                                   <span className="text-muted-foreground">
                                     {user.agency.address}
@@ -177,12 +177,12 @@ const MenuOptions: React.FC<MenuOptionsProps> = ({
                     )}
                     <CommandGroup heading="Accounts">
                       {!!subAccount.length ? (
-                        subAccount.map((sub) => (
+                        subAccount.map(sub => (
                           <CommandItem key={sub.id}>
                             {defaultOpen ? (
                               <Link
                                 href={`/subaccount/${sub.id}`}
-                                className="flex gap-4 w-full h-full"
+                                className="flex h-full w-full gap-4"
                               >
                                 <div className="relative w-10">
                                   <Image
@@ -192,7 +192,7 @@ const MenuOptions: React.FC<MenuOptionsProps> = ({
                                     className="rounded-md object-contain"
                                   />
                                 </div>
-                                <div className="flex flex-col flex-1">
+                                <div className="flex flex-1 flex-col">
                                   {sub.name}
                                   <span className="text-muted-foreground">
                                     {sub.address}
@@ -203,7 +203,7 @@ const MenuOptions: React.FC<MenuOptionsProps> = ({
                               <SheetClose asChild>
                                 <Link
                                   href={`/subaccount/${sub.id}`}
-                                  className="flex gap-4 w-full h-full"
+                                  className="flex h-full w-full gap-4"
                                 >
                                   <div className="relative w-10">
                                     <Image
@@ -213,7 +213,7 @@ const MenuOptions: React.FC<MenuOptionsProps> = ({
                                       className="rounded-md object-contain"
                                     />
                                   </div>
-                                  <div className="flex flex-col flex-1">
+                                  <div className="flex flex-1 flex-col">
                                     {sub.name}
                                     <span className="text-muted-foreground">
                                       {sub.address}
@@ -225,7 +225,7 @@ const MenuOptions: React.FC<MenuOptionsProps> = ({
                           </CommandItem>
                         ))
                       ) : (
-                        <div className="text-muted-foreground text-xs text-center w-full">
+                        <div className="w-full text-center text-xs text-muted-foreground">
                           No accounts found.
                         </div>
                       )}
@@ -242,13 +242,17 @@ const MenuOptions: React.FC<MenuOptionsProps> = ({
                               title="Create A Subaccount"
                               subTitle="You can switch between your agency account and the subaccount from the sidebar"
                             >
-                              <SubAccountDetails />
-                            </CustomModal>
+                              <SubAccountDetails
+                                agencyDetails={user.Agency!}
+                                userId={user.id}
+                                userName={user.name}
+                              />
+                            </CustomModal>,
                           )
                         }
-                        className="w-full flex items-center gap-2 mt-4"
+                        className="mt-4 flex w-full items-center gap-2"
                       >
-                        <PlusCircle aria-hidden className="w-4 h-4" />
+                        <PlusCircle aria-hidden className="h-4 w-4" />
                         Create Sub Account
                       </Button>
                     </div>
@@ -257,7 +261,7 @@ const MenuOptions: React.FC<MenuOptionsProps> = ({
               </Command>
             </PopoverContent>
           </Popover>
-          <p className="text-muted-foreground text-xs mb-2">Menu Links</p>
+          <p className="mb-2 text-xs text-muted-foreground">Menu Links</p>
           <Separator className="mb-4" />
           <nav className="relative">
             <Command className="bg-transparent">
@@ -265,10 +269,10 @@ const MenuOptions: React.FC<MenuOptionsProps> = ({
               <CommandList>
                 <CommandEmpty>No results found.</CommandEmpty>
                 <CommandGroup>
-                  {sideBarOptions.map((option) => {
+                  {sideBarOptions.map(option => {
                     let value;
                     const Result = icons.find(
-                      (icon) => icon.value === option.icon
+                      icon => icon.value === option.icon,
                     );
 
                     if (Result) {
@@ -278,16 +282,16 @@ const MenuOptions: React.FC<MenuOptionsProps> = ({
                       <CommandItem
                         key={option.id}
                         className={cn(
-                          "w-full transition-all aria-selected:bg-inherit",
+                          'w-full transition-all aria-selected:bg-inherit',
                           {
-                            "bg-primary text-white font-bold":
+                            'bg-primary font-bold text-white':
                               pathname === option.link,
-                          }
+                          },
                         )}
                       >
                         <Link
                           href={option.link}
-                          className="flex items-center gap-2 rounded-md w-full"
+                          className="flex w-full items-center gap-2 rounded-md"
                         >
                           {value}
                           <span>{option.name}</span>

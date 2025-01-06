@@ -1,22 +1,19 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 
-import { useRouter } from "next/navigation";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { NumberInput } from "@tremor/react";
-import { Role, type Agency } from "@prisma/client";
-import { v4 as uuidv4 } from "uuid";
+import { useRouter } from 'next/navigation';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { NumberInput } from '@tremor/react';
+import { Role, type Agency } from '@prisma/client';
+import { v4 as uuidv4 } from 'uuid';
 
-import {
-  deleteAgency,
-  updateAgencyDetails,
-} from "@/queries/agency";
-import { saveActivityLogsNotification } from "@/queries/notification";
-import { initUser } from "@/queries/auth";
+import { deleteAgency, updateAgencyDetails } from '@/queries/agency';
+import { saveActivityLogsNotification } from '@/queries/notification';
+import { initUser } from '@/queries/auth';
 
-import { toast } from "sonner";
+import { toast } from 'sonner';
 
 import {
   AlertDialog,
@@ -28,7 +25,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "../ui/alert-dialog";
+} from '../ui/alert-dialog';
 import {
   Card,
   CardContent,
@@ -36,7 +33,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../ui/card";
+} from '../ui/card';
 import {
   Form,
   FormControl,
@@ -45,14 +42,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
-import { Switch } from "../ui/switch";
-import { Button } from "../ui/button";
-import FileUpload from "../global/FileUpload";
-import axios from "axios";
+} from '../ui/form';
+import { Input } from '../ui/input';
+import { Switch } from '../ui/switch';
+import { Button } from '../ui/button';
+import FileUpload from '../global/FileUpload';
+import axios from 'axios';
 
-import { AgencyDetailsValidator, type AgencyDetailsSchema} from "@/lib/validators/agency-details";
+import {
+  AgencyDetailsValidator,
+  type AgencyDetailsSchema,
+} from '@/lib/validators/agency-details';
 
 interface AgencyDetailsProps {
   data?: Partial<Agency>;
@@ -64,7 +64,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
   const [deletingAgency, setDeletingAgency] = React.useState<boolean>(false);
 
   const form = useForm<AgencyDetailsSchema>({
-    mode: "onChange",
+    mode: 'onChange',
     resolver: zodResolver(AgencyDetailsValidator),
     defaultValues: {
       whiteLabel: data?.whiteLabel || false,
@@ -82,11 +82,10 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
 
   // Example in your AgencyDetails component
 
-  const onSubmit: SubmitHandler<AgencyDetailsSchema> = async (values) => {
+  const onSubmit: SubmitHandler<AgencyDetailsSchema> = async values => {
     try {
       let customerId: string | undefined;
       if (!data?.id) {
-
         // create Stripe customer if there is no agency
         const bodyData = {
           email: values.companyEmail,
@@ -116,10 +115,9 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
       // if (!data?.customerId && !customerId) return;
 
       // Prepare agency data to be sent to the server
-      console.log(values)
       const agencyData = {
         id: data?.id ? data.id : uuidv4(),
-        customerId: data?.customerId || customerId || "",
+        customerId: data?.customerId || customerId || '',
         address: values.address,
         agencyLogo: values.agencyLogo,
         city: values.city,
@@ -132,21 +130,21 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
         createdAt: new Date(),
         updatedAt: new Date(),
         companyEmail: values.companyEmail,
-        connectAccountId: "",
-        goal:5,
+        connectAccountId: '',
+        goal: 5,
       };
 
-      const response = await axios.post("/api/upsert-agency", {
+      const response = await axios.post('/api/upsert-agency', {
         agency: agencyData,
       });
 
-      toast.success("Created Agency");
+      toast.success('Created Agency');
 
       if (data?.id) router.refresh();
       if (response.data) router.refresh();
     } catch (error) {
-      toast.error("Oops! Could not create your agency. Please try again.");
-      console.error("Error:", error);
+      toast.error('Oops! Could not create your agency. Please try again.');
+      console.error('Error:', error);
     }
   };
 
@@ -159,14 +157,14 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
     try {
       const response = await deleteAgency(data.id);
 
-      toast.success("Deleted Agency", {
-        description: "Deleted your agency and all related subaccounts.",
+      toast.success('Deleted Agency', {
+        description: 'Deleted your agency and all related subaccounts.',
       });
 
       router.refresh();
     } catch (error) {
-      toast.error("Oppse!", {
-        description: "Could not delete your agency. Please try again.",
+      toast.error('Oppse!', {
+        description: 'Could not delete your agency. Please try again.',
       });
 
       router.refresh();
@@ -177,7 +175,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
 
   return (
     <AlertDialog>
-      <Card className="w-full my-10">
+      <Card className="my-10 w-full">
         <CardHeader>
           <CardTitle>Create an Agency</CardTitle>
           <CardDescription>
@@ -206,7 +204,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
                   </FormItem>
                 )}
               />
-              <div className="flex md:flex-row gap-4">
+              <div className="flex gap-4 md:flex-row">
                 <FormField
                   // disabled={isSubmitting}
                   control={form.control}
@@ -215,7 +213,11 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
                     <FormItem className="flex-1">
                       <FormLabel>Agency Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your agency name" {...field} />
+                        <Input
+                          required
+                          placeholder="Your agency name"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -259,7 +261,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
                 name="whiteLabel"
                 render={({ field }) => {
                   return (
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border gap-4 p-4">
+                    <FormItem className="flex flex-row items-center justify-between gap-4 rounded-lg border p-4">
                       <div>
                         <FormLabel>White Label Agency</FormLabel>
                         <FormDescription>
@@ -294,7 +296,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
                   </FormItem>
                 )}
               />
-              <div className="flex md:flex-row gap-4">
+              <div className="flex gap-4 md:flex-row">
                 <FormField
                   // disabled={isSubmitting}
                   control={form.control}
@@ -363,15 +365,17 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
                   <NumberInput
                     defaultValue={data.goal}
                     min={1}
-                    className="!bg-background !border !border-input rounded-md text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="rounded-md !border !border-input !bg-background text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     placeholder="Sub Account Goal"
-                    onValueChange={async (value) => {
+                    onValueChange={async value => {
                       if (!data.id) {
                         return;
                       }
 
                       await updateAgencyDetails(data?.id, { goal: value });
-                      await saveActivityLogsNotification({agencyId: data?.id,description: `Updated the agency goal to | ${value} Sub Account`,
+                      await saveActivityLogsNotification({
+                        agencyId: data?.id,
+                        description: `Updated the agency goal to | ${value} Sub Account`,
                       });
 
                       router.refresh();
@@ -407,7 +411,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
               disabled={isSubmitting || deletingAgency}
               asChild
             >
-              <div className="flex justify-end w-full">
+              <div className="flex w-full justify-end">
                 <Button
                   variant="destructive"
                   disabled={isSubmitting || deletingAgency}

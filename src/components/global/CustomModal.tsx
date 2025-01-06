@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import React from "react";
-import { useModal } from "@/hooks/use-modal";
+import React from 'react';
+import { useModal } from '@/hooks/use-modal';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "../ui/dialog";
-import { ScrollArea } from "../ui/scroll-area";
+} from '../ui/dialog';
+import { ScrollArea } from '../ui/scroll-area';
 
 interface CustomModalProps {
   title: string;
@@ -30,7 +30,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
 
   return (
     <Dialog open={isOpen || defaultOpen} onOpenChange={setClose}>
-      <DialogContent className="bg-card max-w-xl">
+      <DialogContent className="max-w-xl bg-card">
         <ScrollArea scrollShadow={scrollShadow} className="md:max-h-[700px]">
           <div className="flex flex-col gap-4">
             <DialogHeader className="text-left">

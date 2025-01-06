@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import React from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { Role, type SubAccount, type User } from "@prisma/client";
-import { v4 as uuidv4 } from "uuid";
+import React from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import { Role, type SubAccount, type User } from '@prisma/client';
+import { v4 as uuidv4 } from 'uuid';
 
-import { getAuthUserDetails, updateUser } from "@/queries/auth";
+import { getAuthUserDetails, updateUser } from '@/queries/auth';
 import {
   changeUserPermissions,
   getUserWithPermissionsAndSubAccount,
-} from "@/queries/permission";
-import { saveActivityLogsNotification } from "@/queries/notification";
+} from '@/queries/permission';
+import { saveActivityLogsNotification } from '@/queries/notification';
 
 import {
   Card,
@@ -21,7 +21,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../ui/card";
+} from '../ui/card';
 import {
   Form,
   FormControl,
@@ -30,33 +30,33 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
+} from '../ui/form';
+import { Input } from '../ui/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
-import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
-import { Switch } from "../ui/switch";
-import FileUpload from "../global/FileUpload";
+} from '../ui/select';
+import { Button } from '../ui/button';
+import { Separator } from '../ui/separator';
+import { Switch } from '../ui/switch';
+import FileUpload from '../global/FileUpload';
 
-import { useModal } from "@/hooks/use-modal";
+import { useModal } from '@/hooks/use-modal';
 import {
   type AuthUserWithAgencySidebarOptionsAndSubAccounts,
   type UserWithPermissionsAndSubAccounts,
-} from "@/lib/types";
+} from '@/lib/types';
 import {
   type UserDataSchema,
   UserDataValidator,
-} from "@/lib/validators/user-data";
+} from '@/lib/validators/user-data';
 
 interface UserDetailsProps {
   id: string | null;
-  type: "agency" | "subaccount";
+  type: 'agency' | 'subaccount';
   userData?: Partial<User>;
   subAccounts?: SubAccount[];
 }
@@ -70,7 +70,7 @@ const UserDetailsForm: React.FC<UserDetailsProps> = ({
   const router = useRouter();
   const { data: modalData, setClose } = useModal();
 
-  const [roleState, setRoleState] = React.useState<string>("");
+  const [roleState, setRoleState] = React.useState<string>('');
   const [isPermissionLoading, setIsPermissionLoading] =
     React.useState<boolean>(false);
   const [subAccountPermissions, setSubAccountPermissions] =
@@ -106,7 +106,7 @@ const UserDetailsForm: React.FC<UserDetailsProps> = ({
     const getPermissions = async () => {
       if (modalData.user) {
         const permissions = await getUserWithPermissionsAndSubAccount(
-          modalData.user.id
+          modalData.user.id,
         );
 
         if (permissions) {
@@ -128,21 +128,21 @@ const UserDetailsForm: React.FC<UserDetailsProps> = ({
     }
   }, [userData, modalData]);
 
-  const onSubmit: SubmitHandler<UserDataSchema> = async (values) => {
+  const onSubmit: SubmitHandler<UserDataSchema> = async values => {
     if (!id) return;
 
     if (userData || modalData?.user) {
       const updatedUser = await updateUser(values);
 
       // check if subaccount have permission and if it have save activity log
-      authUserData?.Agency?.SubAccount.filter((subAccount) => {
+      authUserData?.Agency?.SubAccount.filter(subAccount => {
         const isSubAccountHavePermission = authUserData.Permissions.find(
-          (permission) =>
-            permission.subAccountId === subAccount.id && permission.access
+          permission =>
+            permission.subAccountId === subAccount.id && permission.access,
         );
 
         return isSubAccountHavePermission;
-      }).forEach(async (subaccount) => {
+      }).forEach(async subaccount => {
         await saveActivityLogsNotification({
           agencyId: undefined,
           description: `Updated ${userData?.name} information`,
@@ -151,20 +151,20 @@ const UserDetailsForm: React.FC<UserDetailsProps> = ({
       });
 
       if (updatedUser) {
-        toast.success("Success", {
-          description: "Updated User Information",
+        toast.success('Success', {
+          description: 'Updated User Information',
         });
 
         setClose();
         router.refresh();
       } else {
-        toast.error("Oppse!", {
-          description: "Could not update user information",
+        toast.error('Oppse!', {
+          description: 'Could not update user information',
         });
       }
     } else {
-      toast.error("Oppse!", {
-        description: "Could not update user information",
+      toast.error('Oppse!', {
+        description: 'Could not update user information',
       });
     }
   };
@@ -172,7 +172,7 @@ const UserDetailsForm: React.FC<UserDetailsProps> = ({
   const onChangePermission = async (
     subAccountId: string,
     access: boolean,
-    permissionId: string | undefined
+    permissionId: string | undefined,
   ) => {
     if (!modalData.user?.email) return null;
 
@@ -182,12 +182,12 @@ const UserDetailsForm: React.FC<UserDetailsProps> = ({
       permissionId ? permissionId : uuidv4(),
       modalData.user?.email,
       subAccountId,
-      access
+      access,
     );
 
-    if (type === "agency") {
+    if (type === 'agency') {
       const subAccountWithPermission = subAccountPermissions?.Permissions?.find(
-        (permission) => permission.subAccountId === subAccountId
+        permission => permission.subAccountId === subAccountId,
       )?.SubAccount;
 
       await saveActivityLogsNotification({
@@ -198,12 +198,12 @@ const UserDetailsForm: React.FC<UserDetailsProps> = ({
     }
 
     if (response) {
-      toast.success("Success", {
-        description: "The request was successfull",
+      toast.success('Success', {
+        description: 'The request was successfull',
       });
 
       if (subAccountPermissions) {
-        subAccountPermissions.Permissions.find((permission) => {
+        subAccountPermissions.Permissions.find(permission => {
           if (permission.subAccountId === subAccountId) {
             return { ...permission, access: !permission.access };
           }
@@ -212,8 +212,8 @@ const UserDetailsForm: React.FC<UserDetailsProps> = ({
         });
       }
     } else {
-      toast.error("Failed", {
-        description: "Could not update permission",
+      toast.error('Failed', {
+        description: 'Could not update permission',
       });
     }
 
@@ -293,16 +293,16 @@ const UserDetailsForm: React.FC<UserDetailsProps> = ({
                   <FormLabel>User role</FormLabel>
                   <Select
                     disabled={field.value === Role.AGENCY_OWNER}
-                    onValueChange={(value) => {
+                    onValueChange={value => {
                       if (
                         value === Role.SUBACCOUNT_USER ||
                         value === Role.SUBACCOUNT_GUEST
                       ) {
                         setRoleState(
-                          "You need to have subaccounts to assing Subaccount access to team member."
+                          'You need to have subaccounts to assing Subaccount access to team member.',
                         );
                       } else {
-                        setRoleState("");
+                        setRoleState('');
                       }
 
                       field.onChange(value);
@@ -336,7 +336,7 @@ const UserDetailsForm: React.FC<UserDetailsProps> = ({
               )}
             />
 
-            <div className="flex justify-end w-full">
+            <div className="flex w-full justify-end">
               <Button
                 // disabled={isSubmitting}
                 // isLoading={isSubmitting}
@@ -356,11 +356,10 @@ const UserDetailsForm: React.FC<UserDetailsProps> = ({
                   agency owners.
                 </FormDescription>
                 <div className="flex flex-col gap-4">
-                  {subAccounts?.map((subAccount) => {
+                  {subAccounts?.map(subAccount => {
                     const subAccountPermissionsDetails =
                       subAccountPermissions?.Permissions.find(
-                        (permission) =>
-                          permission.subAccountId === subAccount.id
+                        permission => permission.subAccountId === subAccount.id,
                       );
 
                     return (
@@ -374,11 +373,11 @@ const UserDetailsForm: React.FC<UserDetailsProps> = ({
                         <Switch
                           disabled={isPermissionLoading}
                           checked={subAccountPermissionsDetails?.access}
-                          onCheckedChange={(access) => {
+                          onCheckedChange={access => {
                             onChangePermission(
                               subAccount.id,
                               access,
-                              subAccountPermissionsDetails?.id
+                              subAccountPermissionsDetails?.id,
                             );
                           }}
                         />

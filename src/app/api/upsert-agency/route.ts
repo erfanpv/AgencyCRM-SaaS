@@ -1,11 +1,14 @@
-import { db } from "@/lib/db";
-import { NextResponse } from "next/server";
+import { db } from '@/lib/db';
+import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   try {
-    const { agency } = await request.json(); 
+    const { agency } = await request.json();
     if (!agency.companyEmail) {
-      return NextResponse.json({ error: "Agency email is required." }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Agency email is required.' },
+        { status: 400 },
+      );
     }
 
     const agencyDetails = await db.agency.upsert({
@@ -18,12 +21,32 @@ export async function POST(request: Request) {
         ...agency,
         SidebarOption: {
           create: [
-            { name: "Dashboard", icon: "category", link: `/agency/${agency.id}` },
-            { name: "Launchpad", icon: "clipboardIcon", link: `/agency/${agency.id}/launchpad` },
-            { name: "Billing", icon: "payment", link: `/agency/${agency.id}/billing` },
-            { name: "Settings", icon: "settings", link: `/agency/${agency.id}/settings` },
-            { name: "Sub Accounts", icon: "person", link: `/agency/${agency.id}/all-subaccounts` },
-            { name: "Team", icon: "shield", link: `/agency/${agency.id}/team` },
+            {
+              name: 'Dashboard',
+              icon: 'category',
+              link: `/agency/${agency.id}`,
+            },
+            {
+              name: 'Launchpad',
+              icon: 'clipboardIcon',
+              link: `/agency/${agency.id}/launchpad`,
+            },
+            {
+              name: 'Billing',
+              icon: 'payment',
+              link: `/agency/${agency.id}/billing`,
+            },
+            {
+              name: 'Settings',
+              icon: 'settings',
+              link: `/agency/${agency.id}/settings`,
+            },
+            {
+              name: 'Sub Accounts',
+              icon: 'person',
+              link: `/agency/${agency.id}/all-subaccounts`,
+            },
+            { name: 'Team', icon: 'shield', link: `/agency/${agency.id}/team` },
           ],
         },
       },
@@ -31,7 +54,10 @@ export async function POST(request: Request) {
 
     return NextResponse.json(agencyDetails, { status: 200 });
   } catch (error) {
-    console.error("Error in upsertAgency:", error);
-    return NextResponse.json({ error: "Internal server error." }, { status: 500 });
+    console.error('Error in upsertAgency:', error);
+    return NextResponse.json(
+      { error: 'Internal server error.' },
+      { status: 500 },
+    );
   }
 }

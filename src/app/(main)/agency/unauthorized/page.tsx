@@ -1,5 +1,5 @@
-import Unauthorized from "@/components/global/Unauthorized";
-import React from "react";
+import Unauthorized from '@/components/global/Unauthorized';
+import React from 'react';
 
 const UnauthorizedPage: React.FC = () => <Unauthorized />;
 

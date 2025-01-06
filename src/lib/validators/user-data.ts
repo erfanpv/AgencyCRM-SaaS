@@ -1,5 +1,5 @@
-import { Role } from "@prisma/client";
-import { z } from "zod";
+import { Role } from '@prisma/client';
+import { z } from 'zod';
 
 export const UserDataValidator = z.object({
   name: z.string().min(1),

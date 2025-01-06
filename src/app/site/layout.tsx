@@ -1,7 +1,7 @@
-import Navigation from "@/components/modules/landing/Navigation";
-import { ClerkProvider } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
-import React from "react";
+import Navigation from '@/components/modules/landing/Navigation';
+import { ClerkProvider } from '@clerk/nextjs';
+import { dark } from '@clerk/themes';
+import React from 'react';
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (

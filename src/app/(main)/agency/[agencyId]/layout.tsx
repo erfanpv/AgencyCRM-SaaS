@@ -1,12 +1,12 @@
-import React from "react";
-import { redirect } from "next/navigation";
-import { currentUser } from "@clerk/nextjs/server";
-import { Role } from "@prisma/client";
-import Sidebar from "@/components/navigation/Sidebar";
-import BlurPage from "@/components/global/BlurPage";
-import { verifyAndAcceptInvitation } from "@/queries/invitation";
-import { getNotification } from "@/queries/notification";
-import InfoBar from "@/components/global/InfoBar";
+import React from 'react';
+import { redirect } from 'next/navigation';
+import { currentUser } from '@clerk/nextjs/server';
+import { Role } from '@prisma/client';
+import Sidebar from '@/components/navigation/Sidebar';
+import BlurPage from '@/components/global/BlurPage';
+import { verifyAndAcceptInvitation } from '@/queries/invitation';
+import { getNotification } from '@/queries/notification';
+import InfoBar from '@/components/global/InfoBar';
 
 interface AgencyIdLayoutProps extends React.PropsWithChildren {
   params: {
@@ -21,25 +21,24 @@ const AgencyIdLayout: React.FC<AgencyIdLayoutProps> = async ({
   const user = await currentUser();
   const agencyId = await verifyAndAcceptInvitation();
 
-  if (!user) redirect("/");
-  if (!agencyId || !params.agencyId) redirect("/agency");
+  if (!user) redirect('/');
+  if (!agencyId || !params.agencyId) redirect('/agency');
 
   if (
     user.privateMetadata.role !== Role.AGENCY_OWNER &&
     user.privateMetadata.role !== Role.AGENCY_ADMIN
   ) {
-    redirect("/agency/unauthorized");
+    redirect('/agency/unauthorized');
   }
 
   const notifications = await getNotification(agencyId);
-  console.log("erfan", notifications);
 
   return (
     <div className="h-screen overflow-hidden">
       <Sidebar id={params.agencyId} type="agency" />
       <div className="md:pl-[300px]">
         <InfoBar
-          notifications={notifications?.map((notification) => ({
+          notifications={notifications?.map(notification => ({
             ...notification,
             user: notification.User,
           }))}

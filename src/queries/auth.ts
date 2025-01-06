@@ -1,10 +1,10 @@
-"use server";
+'use server';
 
-import { currentUser } from "@clerk/nextjs/server";
-import { clerkClient } from "@clerk/clerk-sdk-node";
-import { db } from "@/lib/db";
-import { Role, User } from "@prisma/client";
-import { logger } from "@/lib/utils";
+import { currentUser } from '@clerk/nextjs/server';
+import { clerkClient } from '@clerk/clerk-sdk-node';
+import { db } from '@/lib/db';
+import { Role, User } from '@prisma/client';
+import { logger } from '@/lib/utils';
 
 export const getAuthUser = async (email: string) => {
   try {
@@ -15,7 +15,7 @@ export const getAuthUser = async (email: string) => {
     });
 
     if (!details) {
-      throw new Error("Not authorized");
+      throw new Error('Not authorized');
     }
 
     return details as User;
@@ -55,7 +55,7 @@ export const getAuthUserDetails = async () => {
 
 // Adds a new user to an agency.
 export const createTeamUser = async (agencyId: string, user: User) => {
-  if (user.role === "AGENCY_OWNER") return null;
+  if (user.role === 'AGENCY_OWNER') return null;
   const response = await db.user.create({ data: { ...user } });
   return response;
 };
@@ -65,7 +65,7 @@ export const initUser = async (newUser: Partial<User>) => {
   const user = await currentUser();
 
   if (!user) {
-    return new Error("User not found");
+    return new Error('User not found');
   }
 
   const userData = await db.user.upsert({

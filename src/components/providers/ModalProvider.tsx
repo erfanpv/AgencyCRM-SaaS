@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 import {
   type Plan,
   type Agency,
   type Contact,
   type User,
-} from "@prisma/client";
+} from '@prisma/client';
 
 export interface ModalData {
   user?: User;
@@ -40,11 +40,11 @@ export const ModalProvider: React.FC<React.PropsWithChildren> = ({
     setIsMounted(true);
   }, []);
 
-  const setOpen: ModalContextType["setOpen"] = async (modal, fetch) => {
+  const setOpen: ModalContextType['setOpen'] = async (modal, fetch) => {
     if (modal) {
       if (fetch) {
         const newData = await fetch();
-        setData((prevData) => ({ ...prevData, ...newData }));
+        setData(prevData => ({ ...prevData, ...newData }));
       }
 
       setCurrentModal(modal);

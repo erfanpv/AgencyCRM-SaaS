@@ -1,11 +1,14 @@
-import React from "react";
-import { type AgencySidebarOption,type SubAccountSidebarOption } from "@prisma/client";
-import { getAuthUserDetails } from "@/queries/auth";
-import MenuOptions from "./MenuOptions";
+import React from 'react';
+import {
+  type AgencySidebarOption,
+  type SubAccountSidebarOption,
+} from '@prisma/client';
+import { getAuthUserDetails } from '@/queries/auth';
+import MenuOptions from './MenuOptions';
 
 interface SidebarProps {
   id: string;
-  type: "agency" | "subaccount";
+  type: 'agency' | 'subaccount';
 }
 
 const Sidebar: React.FC<SidebarProps> = async ({ id, type }) => {
@@ -14,20 +17,20 @@ const Sidebar: React.FC<SidebarProps> = async ({ id, type }) => {
   if (!user || !user.Agency) return null;
 
   const details =
-    type === "agency"
+    type === 'agency'
       ? user.Agency
-      : user?.Agency.SubAccount.find((Subaccount) => Subaccount.id === id);
+      : user?.Agency.SubAccount.find(Subaccount => Subaccount.id === id);
 
   const isWhiteLabelAgency = user.Agency.whiteLabel;
 
   if (!details) return null;
 
   let sideBarLogo: string =
-    user.Agency.agencyLogo || "/assets/agencyCRM-logo.svg";
+    user.Agency.agencyLogo || '/assets/agencyCRM-logo.svg';
 
-  if (!isWhiteLabelAgency && type === "subaccount") {
+  if (!isWhiteLabelAgency && type === 'subaccount') {
     const subAccountLogo = user?.Agency.SubAccount.find(
-      (subAccount) => subAccount.id === id
+      subAccount => subAccount.id === id,
     )?.subAccountLogo;
 
     sideBarLogo = subAccountLogo || user.Agency.agencyLogo;
@@ -35,21 +38,21 @@ const Sidebar: React.FC<SidebarProps> = async ({ id, type }) => {
 
   let sidebarOptions: AgencySidebarOption[] | SubAccountSidebarOption[] = [];
 
-  if (type === "agency") {
+  if (type === 'agency') {
     sidebarOptions = user.Agency.SidebarOption || [];
   } else {
     const subAccount = user.Agency.SubAccount.find(
-      (subaccount) => subaccount.id === id
+      subaccount => subaccount.id === id,
     );
 
     sidebarOptions = subAccount?.SidebarOption || [];
   }
 
-  const subAccounts = user.Agency.SubAccount.filter((subAccount) =>
+  const subAccounts = user.Agency.SubAccount.filter(subAccount =>
     user.Permissions.find(
-      (permission) =>
-        permission.subAccountId === subAccount.id && permission.access === true
-    )
+      permission =>
+        permission.subAccountId === subAccount.id && permission.access === true,
+    ),
   );
 
   return (

@@ -1,6 +1,6 @@
-"use server";
-import { db } from "@/lib/db";
-import { logger } from "@/lib/utils";
+'use server';
+import { db } from '@/lib/db';
+import { logger } from '@/lib/utils';
 
 export const getUserWithPermissionsAndSubAccount = async (userId: string) => {
   try {
@@ -15,7 +15,7 @@ export const getUserWithPermissionsAndSubAccount = async (userId: string) => {
       },
     });
 
-    if (!response) throw new Error("No user found");
+    if (!response) throw new Error('No user found');
 
     return response;
   } catch (error) {
@@ -27,7 +27,7 @@ export const changeUserPermissions = async (
   permissionId: string | undefined,
   userEmail: string,
   subAccountId: string,
-  access: boolean
+  access: boolean,
 ) => {
   try {
     const response = await db.permissions.upsert({
@@ -45,7 +45,7 @@ export const changeUserPermissions = async (
     });
 
     if (!response)
-      throw new Error("Could not update or create new permission for user");
+      throw new Error('Could not update or create new permission for user');
 
     return response;
   } catch (error) {

@@ -1,8 +1,8 @@
-"use server";
-import { currentUser } from "@clerk/nextjs/server";
-import { db } from "@/lib/db";
-import { logger } from "@/lib/utils";
-import { type NotificationsWithUser } from "@/lib/types";
+'use server';
+import { currentUser } from '@clerk/nextjs/server';
+import { db } from '@/lib/db';
+import { logger } from '@/lib/utils';
+import { type NotificationsWithUser } from '@/lib/types';
 
 // Logs activity and saves it as notifications in the database.
 export const saveActivityLogsNotification = async ({
@@ -36,7 +36,7 @@ export const saveActivityLogsNotification = async ({
   }
 
   if (!userData) {
-    console.log("Could not find a user");
+    console.log('Could not find a user');
     return;
   }
 
@@ -44,7 +44,7 @@ export const saveActivityLogsNotification = async ({
   if (!foundAgencyId) {
     if (!subaccountId) {
       throw new Error(
-        "You need to provide atleast an agency Id or subaccount Id"
+        'You need to provide atleast an agency Id or subaccount Id',
       );
     }
     const response = await db.subAccount.findUnique({
@@ -101,7 +101,7 @@ export const getNotification = async (agencyId: string) => {
         User: true,
       },
       orderBy: {
-        createdAt: "desc",
+        createdAt: 'desc',
       },
     });
 

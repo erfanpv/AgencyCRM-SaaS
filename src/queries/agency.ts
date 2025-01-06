@@ -1,10 +1,9 @@
-"use server"
+'use server';
 
-import { db } from "@/lib/db";
-import { logger } from "@/lib/utils";
-import { AgencyDetailsSchema } from "@/lib/validators/agency-details";
-import { Agency, Plan } from "@prisma/client";
-
+import { db } from '@/lib/db';
+import { logger } from '@/lib/utils';
+import { AgencyDetailsSchema } from '@/lib/validators/agency-details';
+import { Agency, Plan } from '@prisma/client';
 
 export const getAgencyDetails = async (agencyId: string) => {
   try {
@@ -17,18 +16,21 @@ export const getAgencyDetails = async (agencyId: string) => {
       },
     });
 
-    if (!agencyDetails) throw new Error("Agency not found");
+    if (!agencyDetails) throw new Error('Agency not found');
 
     return agencyDetails;
   } catch (error) {
-    logger(error)
+    logger(error);
   }
 };
 
 //update agency details
-export const updateAgencyDetails = async (agencyId: string, agencyDetails: Partial<AgencyDetailsSchema>) => {
+export const updateAgencyDetails = async (
+  agencyId: string,
+  agencyDetails: Partial<AgencyDetailsSchema>,
+) => {
   if (!agencyDetails.goal) {
-    throw new Error("The `goal` field is required.");
+    throw new Error('The `goal` field is required.');
   }
 
   const response = await db.agency.update({
@@ -43,8 +45,6 @@ export const updateAgencyDetails = async (agencyId: string, agencyDetails: Parti
 
   return response;
 };
-
-
 
 //delete agency
 export const deleteAgency = async (agencyId: string) => {
@@ -69,33 +69,33 @@ export const upsertAgency = async (agency: Agency, price?: Plan) => {
         SidebarOption: {
           create: [
             {
-              name: "Dashboard",
-              icon: "category",
+              name: 'Dashboard',
+              icon: 'category',
               link: `/agency/${agency.id}`,
             },
             {
-              name: "Launchpad",
-              icon: "clipboardIcon",
+              name: 'Launchpad',
+              icon: 'clipboardIcon',
               link: `/agency/${agency.id}/launchpad`,
             },
             {
-              name: "Billing",
-              icon: "payment",
+              name: 'Billing',
+              icon: 'payment',
               link: `/agency/${agency.id}/billing`,
             },
             {
-              name: "Settings",
-              icon: "settings",
+              name: 'Settings',
+              icon: 'settings',
               link: `/agency/${agency.id}/settings`,
             },
             {
-              name: "Sub Accounts",
-              icon: "person",
+              name: 'Sub Accounts',
+              icon: 'person',
               link: `/agency/${agency.id}/all-subaccounts`,
             },
             {
-              name: "Team",
-              icon: "shield",
+              name: 'Team',
+              icon: 'shield',
               link: `/agency/${agency.id}/team`,
             },
           ],
@@ -105,6 +105,6 @@ export const upsertAgency = async (agency: Agency, price?: Plan) => {
 
     return agencyDetails;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };

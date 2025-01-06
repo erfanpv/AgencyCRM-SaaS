@@ -1,10 +1,10 @@
-"use client";
-import React from "react";
-import { Role } from "@prisma/client";
-import { UserButton } from "@clerk/nextjs";
-import { Bell } from "lucide-react";
-import { format } from "date-fns";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
+'use client';
+import React from 'react';
+import { Role } from '@prisma/client';
+import { UserButton } from '@clerk/nextjs';
+import { Bell } from 'lucide-react';
+import { format } from 'date-fns';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 import {
   Sheet,
   SheetContent,
@@ -12,14 +12,14 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "../ui/sheet";
-import { Button } from "../ui/button";
-import { Card, CardContent } from "../ui/card";
-import { Switch } from "../ui/switch";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { ModeToggle } from "./ModeToggle";
-import { cn } from "@/lib/utils";
-import { type NotificationsWithUser } from "@/lib/types";
+} from '../ui/sheet';
+import { Button } from '../ui/button';
+import { Card, CardContent } from '../ui/card';
+import { Switch } from '../ui/switch';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { ModeToggle } from './ModeToggle';
+import { cn } from '@/lib/utils';
+import { type NotificationsWithUser } from '@/lib/types';
 
 interface InfoBarProps {
   notifications: NotificationsWithUser;
@@ -45,33 +45,33 @@ const InfoBar: React.FC<InfoBarProps> = ({
     } else {
       if (!!notifications?.length) {
         const filteredNotifications = notifications?.filter(
-          (notif) => notif.subAccountId === subAccountId
+          notif => notif.subAccountId === subAccountId,
         );
 
         setAllNotifications(filteredNotifications ?? []);
       }
     }
 
-    setIsShowAll((prev) => !prev);
+    setIsShowAll(prev => !prev);
   };
 
   return (
     <>
       <div
         className={cn(
-          "fixed z-[20] md:left-[300px] left-0 right-0 top-0 p-4 bg-background/80 backdrop-blur-md flex gap-4 items-center border-b-[1px] ",
-          className
+          'fixed left-0 right-0 top-0 z-[20] flex items-center gap-4 border-b-[1px] bg-background/80 p-4 backdrop-blur-md md:left-[300px]',
+          className,
         )}
       >
-        <div className="flex items-center gap-2 ml-auto">
+        <div className="ml-auto flex items-center gap-2">
           <UserButton afterSignOutUrl="/" />
           <Sheet>
             <SheetTrigger asChild>
-              <Button size="icon" className="rounded-full w-8 h-8">
-                <Bell aria-label="Notifications" className="w-4 h-4" />
+              <Button size="icon" className="h-8 w-8 rounded-full">
+                <Bell aria-label="Notifications" className="h-4 w-4" />
               </Button>
             </SheetTrigger>
-            <SheetContent className="pr-4 flex flex-col">
+            <SheetContent className="flex flex-col pr-4">
               <SheetHeader className="text-left">
                 <SheetTitle>Notifications</SheetTitle>
                 <SheetDescription asChild>
@@ -89,9 +89,9 @@ const InfoBar: React.FC<InfoBarProps> = ({
               {!!allNotifications?.length && (
                 <div
                   ref={animatedListRef}
-                  className="flex flex-col gap-4 overflow-y-auto scrollbar scrollbar-thumb-muted-foreground/20 scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-medium"
+                  className="scrollbar scrollbar-thumb-muted-foreground/20 scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-medium flex flex-col gap-4 overflow-y-auto"
                 >
-                  {allNotifications?.map((notification) => (
+                  {allNotifications?.map(notification => (
                     <Card key={notification.id}>
                       <CardContent className="flex gap-4 p-4">
                         <Avatar>
@@ -106,19 +106,19 @@ const InfoBar: React.FC<InfoBarProps> = ({
                         <div className="flex flex-col gap-2">
                           <p className="leading-tight">
                             <span className="font-semibold">
-                              {notification.notification.split("|")[0]}
+                              {notification.notification.split('|')[0]}
                             </span>
                             <span className="text-muted-foreground">
-                              {notification.notification.split("|")[1]}
+                              {notification.notification.split('|')[1]}
                             </span>
                             <span className="font-semibold">
-                              {notification.notification.split("|")[2]}
+                              {notification.notification.split('|')[2]}
                             </span>
                           </p>
                           <small className="text-sm text-muted-foreground">
                             {format(
                               new Date(notification.createdAt),
-                              "dd.MM.yyyy hh:mm a"
+                              'dd.MM.yyyy hh:mm a',
                             )}
                           </small>
                         </div>
@@ -128,7 +128,7 @@ const InfoBar: React.FC<InfoBarProps> = ({
                 </div>
               )}
               {!allNotifications?.length && (
-                <div className="flex items-center justify-center mb-4 text-sm text-muted-foreground">
+                <div className="mb-4 flex items-center justify-center text-sm text-muted-foreground">
                   You have no notifications.
                 </div>
               )}

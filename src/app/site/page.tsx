@@ -5,23 +5,23 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { pricingCards } from "@/lib/constant";
-import clsx from "clsx";
-import { Check } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+} from '@/components/ui/card';
+import { pricingCards } from '@/lib/constant';
+import clsx from 'clsx';
+import { Check } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Home() {
   return (
-    <main className="flex flex-col gap-8 row-start-2 items-center ">
-      <section className="h-full w-full md:pt-44 mt-[-70px] relative flex items-center justify-center flex-col ">
+    <main className="row-start-2 flex flex-col items-center gap-8">
+      <section className="relative mt-[-70px] flex h-full w-full flex-col items-center justify-center md:pt-44">
         {/* grid */}
-        <div className="absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#161616_1px,transparent_1px),linear-gradient(to_bottom,#161616_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)] -z-10" />
+        <div className="absolute bottom-0 left-0 right-0 top-0 -z-10 bg-[linear-gradient(to_right,#161616_1px,transparent_1px),linear-gradient(to_bottom,#161616_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
 
         <p className="text-center">Run your agency, in one place</p>
-        <div className="bg-gradient-to-r from-primary to-secondary-foreground text-transparent bg-clip-text relative">
-          <h1 className="text-9xl font-bold text-center">CRM</h1>
+        <div className="relative bg-gradient-to-r from-primary to-secondary-foreground bg-clip-text text-transparent">
+          <h1 className="text-center text-9xl font-bold">CRM</h1>
         </div>
         {/* <div className="flex justify-center items-center relative md:mt-[-70px]">
           <Image
@@ -35,25 +35,25 @@ export default function Home() {
         </div> */}
       </section>
 
-      <section className="flex justify-center items-center flex-col gap-4 md:!mt-20 mt-[-60px]">
-        <h2 className="text-4xl text-center"> Choose what fits you right</h2>
-        <p className="text-muted-foreground text-center">
+      <section className="mt-[-60px] flex flex-col items-center justify-center gap-4 md:!mt-20">
+        <h2 className="text-center text-4xl"> Choose what fits you right</h2>
+        <p className="text-center text-muted-foreground">
           Our straightforward pricing plans are tailored to meet your needs. If
           {" you're"} not <br />
           ready to commit you can get started for free.
         </p>
-        <div className="flex  justify-center gap-4 flex-wrap mt-6">
-          {pricingCards.map((card) => (
+        <div className="mt-6 flex flex-wrap justify-center gap-4">
+          {pricingCards.map(card => (
             <Card
               key={card.title}
-              className={clsx("w-[300px] flex flex-col justify-between", {
-                "border-2 border-primary": card.title === "Unlimited Saas",
+              className={clsx('flex w-[300px] flex-col justify-between', {
+                'border-2 border-primary': card.title === 'Unlimited Saas',
               })}
             >
               <CardHeader>
                 <CardTitle
-                  className={clsx("", {
-                    "text-muted-foreground": card.title !== "Unlimited Saas",
+                  className={clsx('', {
+                    'text-muted-foreground': card.title !== 'Unlimited Saas',
                   })}
                 >
                   {card.title}
@@ -68,7 +68,7 @@ export default function Home() {
               </CardContent>
               <CardFooter className="flex flex-col items-start gap-4">
                 <div>
-                  {card.features.map((feature) => (
+                  {card.features.map(feature => (
                     <div key={feature} className="flex gap-2">
                       <Check />
                       <p>{feature}</p>
@@ -78,10 +78,10 @@ export default function Home() {
                 <Link
                   href={`/agency?plan=${card.priceId}`}
                   className={clsx(
-                    "w-full text-center bg-primary p-2 rounded-md",
+                    'w-full rounded-md bg-primary p-2 text-center',
                     {
-                      "!bg-muted-foreground": card.title !== "Unlimited Saas",
-                    }
+                      '!bg-muted-foreground': card.title !== 'Unlimited Saas',
+                    },
                   )}
                 >
                   Get Started
