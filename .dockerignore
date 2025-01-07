@@ -1,0 +1,12 @@
+# Ignore environment-specific files such as .env
+node_modules
+# Ignore any temporary build folders
+.next
+# Ignore log files generated during development
+*.log
+# Ignore the Git repository and Git-related files
+.git
+.gitignore
+# Ignore macOS Finder-specific files
+.DS_Store
+
