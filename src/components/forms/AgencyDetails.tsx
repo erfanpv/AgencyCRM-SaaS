@@ -87,27 +87,27 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
       let customerId: string | undefined;
       if (!data?.id) {
         // create Stripe customer if there is no agency
-        const bodyData = {
-          email: values.companyEmail,
-          name: values.name,
-          shipping: {
-            address: {
-              city: values.city,
-              country: values.country,
-              line1: values.address,
-              postal_code: values.zipCode,
-              state: values.zipCode,
-            },
-            name: values.name,
-          },
-          address: {
-            city: values.city,
-            country: values.country,
-            line1: values.address,
-            postal_code: values.zipCode,
-            state: values.zipCode,
-          },
-        };
+        // const bodyData = {
+        //   email: values.companyEmail,
+        //   name: values.name,
+        //   shipping: {
+        //     address: {
+        //       city: values.city,
+        //       country: values.country,
+        //       line1: values.address,
+        //       postal_code: values.zipCode,
+        //       state: values.zipCode,
+        //     },
+        //     name: values.name,
+        //   },
+        //   address: {
+        //     city: values.city,
+        //     country: values.country,
+        //     line1: values.address,
+        //     postal_code: values.zipCode,
+        //     state: values.zipCode,
+        //   },
+        // };
       }
 
       await initUser({ role: Role.AGENCY_OWNER });
@@ -155,7 +155,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
     // TODO: discontinue the subscription for the user
 
     try {
-      const response = await deleteAgency(data.id);
+     await deleteAgency(data.id);
 
       toast.success('Deleted Agency', {
         description: 'Deleted your agency and all related subaccounts.',
@@ -163,6 +163,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
 
       router.refresh();
     } catch (error) {
+      console.log(error)
       toast.error('Oppse!', {
         description: 'Could not delete your agency. Please try again.',
       });

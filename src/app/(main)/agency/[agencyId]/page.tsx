@@ -1,14 +1,14 @@
 import React from 'react';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import Stripe from 'stripe';
+// import Stripe from 'stripe';
 import { format } from 'date-fns';
 import {
   Clipboard,
   Contact2,
   DollarSign,
   Goal,
-  ShoppingCart,
+  // ShoppingCart,
 } from 'lucide-react';
 
 import { getAgencyDetails } from '@/queries/agency';
@@ -36,21 +36,21 @@ interface AgencyIdPageProps {
 }
 
 const AgencyIdPage: React.FC<AgencyIdPageProps> = async ({ params }) => {
-  const { agencyId } = params;
+  const { agencyId } = await params;
 
   if (!agencyId) redirect('/agency/unauthorized');
 
   const currency: string = 'USD';
-  const sessions: Stripe.Checkout.Session[] = [];
-  let totalClosedSessions;
-  let totalPendingSessions;
+  // const sessions: Stripe.Checkout.Session[] = [];
+  // let totalClosedSessions;
+  // let totalPendingSessions;
   const net: number = 0;
   const potentialIncome: number = 0;
-  const closingRate: number = 0;
+  // const closingRate: number = 0;
 
-  const currentDate = new Date().getFullYear();
-  const startDate = new Date(`${currentDate}-01-01T00:00:00Z`).getTime() / 1000;
-  const endDate = new Date(`${currentDate}-12-31T23:59:59Z`).getTime() / 1000;
+  // const currentDate = new Date().getFullYear();
+  // const startDate = new Date(`${currentDate}-01-01T00:00:00Z`).getTime() / 1000;
+  // const endDate = new Date(`${currentDate}-12-31T23:59:59Z`).getTime() / 1000;
 
   const agencyDetails = await getAgencyDetails(agencyId);
 

@@ -2,7 +2,7 @@
 import { currentUser } from '@clerk/nextjs/server';
 import { db } from '@/lib/db';
 import { logger } from '@/lib/utils';
-import { type NotificationsWithUser } from '@/lib/types';
+// import { type NotificationsWithUser } from '@/lib/types';
 
 // Logs activity and saves it as notifications in the database.
 export const saveActivityLogsNotification = async ({

@@ -3,7 +3,7 @@
 import { db } from '@/lib/db';
 import { logger } from '@/lib/utils';
 import { AgencyDetailsSchema } from '@/lib/validators/agency-details';
-import { Agency, Plan } from '@prisma/client';
+import { Agency } from '@prisma/client';
 
 export const getAgencyDetails = async (agencyId: string) => {
   try {
@@ -53,7 +53,7 @@ export const deleteAgency = async (agencyId: string) => {
 };
 
 //agency creation
-export const upsertAgency = async (agency: Agency, price?: Plan) => {
+export const upsertAgency = async (agency: Agency) => {
   if (!agency.companyEmail) return null;
   try {
     const agencyDetails = await db.agency.upsert({
