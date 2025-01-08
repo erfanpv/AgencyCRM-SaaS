@@ -1,6 +1,6 @@
 'use server';
 
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { logger } from '@/lib/utils';
 import { AgencyDetailsSchema } from '@/lib/validators/agency-details';
 import { Agency } from '@prisma/client';
@@ -12,7 +12,7 @@ export const getAgencyDetails = async (agencyId: string) => {
         id: agencyId,
       },
       include: {
-        SubAccount: true,
+        subAccounts: true,
       },
     });
 
@@ -66,7 +66,7 @@ export const upsertAgency = async (agency: Agency) => {
           connect: { email: agency.companyEmail },
         },
         ...agency,
-        SidebarOption: {
+        sidebarOptions: {
           create: [
             {
               name: 'Dashboard',

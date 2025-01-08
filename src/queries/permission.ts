@@ -1,5 +1,5 @@
 'use server';
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { logger } from '@/lib/utils';
 
 export const getUserWithPermissionsAndSubAccount = async (userId: string) => {
@@ -7,9 +7,9 @@ export const getUserWithPermissionsAndSubAccount = async (userId: string) => {
     const response = await db.user.findUnique({
       where: { id: userId },
       select: {
-        Permissions: {
+        permissions: {
           include: {
-            SubAccount: true,
+            subAccount: true,
           },
         },
       },

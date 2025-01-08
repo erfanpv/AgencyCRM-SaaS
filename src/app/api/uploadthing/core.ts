@@ -10,6 +10,7 @@ const f = createUploadthing();
 const authenticateUser = () => {
   const user = auth();
 
+
   if (!user) {
     throw new UploadThingError('Unauthorized');
   }

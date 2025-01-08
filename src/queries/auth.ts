@@ -2,7 +2,7 @@
 
 import { currentUser } from '@clerk/nextjs/server';
 import { clerkClient } from '@clerk/clerk-sdk-node';
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { Role, User } from '@prisma/client';
 import { logger } from '@/lib/utils';
 
@@ -36,17 +36,17 @@ export const getAuthUserDetails = async () => {
       email: user.emailAddresses[0].emailAddress,
     },
     include: {
-      Agency: {
+      agency: {
         include: {
-          SidebarOption: true,
-          SubAccount: {
+          sidebarOptions: true,
+          subAccounts: {
             include: {
-              SidebarOption: true,
+              sidebarOptions: true,
             },
           },
         },
       },
-      Permissions: true,
+      permissions: true,
     },
   });
 

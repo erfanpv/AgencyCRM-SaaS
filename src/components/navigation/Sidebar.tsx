@@ -14,42 +14,42 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = async ({ id, type }) => {
   const user = await getAuthUserDetails();
 
-  if (!user || !user.Agency) return null;
+  if (!user || !user.agency) return null;
 
   const details =
     type === 'agency'
-      ? user.Agency
-      : user?.Agency.SubAccount.find(Subaccount => Subaccount.id === id);
+      ? user.agency
+      : user?.agency.subAccounts.find(Subaccount => Subaccount.id === id);
 
-  const isWhiteLabelAgency = user.Agency.whiteLabel;
+  const isWhiteLabelAgency = user.agency.whiteLabel;
 
   if (!details) return null;
 
   let sideBarLogo: string =
-    user.Agency.agencyLogo || '/assets/agencyCRM-logo.svg';
+    user.agency.agencyLogo || '/assets/agencyCRM-logo.svg';
 
   if (!isWhiteLabelAgency && type === 'subaccount') {
-    const subAccountLogo = user?.Agency.SubAccount.find(
+    const subAccountLogo = user?.agency.subAccounts.find(
       subAccount => subAccount.id === id,
     )?.subAccountLogo;
 
-    sideBarLogo = subAccountLogo || user.Agency.agencyLogo;
+    sideBarLogo = subAccountLogo || user.agency.agencyLogo;
   }
 
   let sidebarOptions: AgencySidebarOption[] | SubAccountSidebarOption[] = [];
 
   if (type === 'agency') {
-    sidebarOptions = user.Agency.SidebarOption || [];
+    sidebarOptions = user.agency.sidebarOptions || [];
   } else {
-    const subAccount = user.Agency.SubAccount.find(
+    const subAccount = user.agency.subAccounts.find(
       subaccount => subaccount.id === id,
     );
 
-    sidebarOptions = subAccount?.SidebarOption || [];
+    sidebarOptions = subAccount?.sidebarOptions || [];
   }
 
-  const subAccounts = user.Agency.SubAccount.filter(subAccount =>
-    user.Permissions.find(
+  const subAccounts = user.agency.subAccounts.filter(subAccount =>
+    user.permissions.find(
       permission =>
         permission.subAccountId === subAccount.id && permission.access === true,
     ),

@@ -135,8 +135,8 @@ const UserDetailsForm: React.FC<UserDetailsProps> = ({
       const updatedUser = await updateUser(values);
 
       // check if subaccount have permission and if it have save activity log
-      authUserData?.Agency?.SubAccount.filter(subAccount => {
-        const isSubAccountHavePermission = authUserData.Permissions.find(
+      authUserData?.agency?.subAccounts.filter(subAccount => {
+        const isSubAccountHavePermission = authUserData.permissions.find(
           permission =>
             permission.subAccountId === subAccount.id && permission.access,
         );
@@ -186,12 +186,12 @@ const UserDetailsForm: React.FC<UserDetailsProps> = ({
     );
 
     if (type === 'agency') {
-      const subAccountWithPermission = subAccountPermissions?.Permissions?.find(
+      const subAccountWithPermission = subAccountPermissions?.permissions?.find(
         permission => permission.subAccountId === subAccountId,
-      )?.SubAccount;
+      )?.subAccount;
 
       await saveActivityLogsNotification({
-        agencyId: authUserData?.Agency?.id,
+        agencyId: authUserData?.agency?.id,
         description: `Gave ${userData?.name} access to | ${subAccountWithPermission?.name}`,
         subaccountId: subAccountWithPermission?.id,
       });
@@ -203,7 +203,7 @@ const UserDetailsForm: React.FC<UserDetailsProps> = ({
       });
 
       if (subAccountPermissions) {
-        subAccountPermissions.Permissions.find(permission => {
+        subAccountPermissions.permissions.find(permission => {
           if (permission.subAccountId === subAccountId) {
             return { ...permission, access: !permission.access };
           }
@@ -358,7 +358,7 @@ const UserDetailsForm: React.FC<UserDetailsProps> = ({
                 <div className="flex flex-col gap-4">
                   {subAccounts?.map(subAccount => {
                     const subAccountPermissionsDetails =
-                      subAccountPermissions?.Permissions.find(
+                      subAccountPermissions?.permissions.find(
                         permission => permission.subAccountId === subAccount.id,
                       );
 

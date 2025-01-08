@@ -1,4 +1,4 @@
-import { db } from '@/lib/db';
+import db from '@/lib/db';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
@@ -19,7 +19,7 @@ export async function POST(request: Request) {
           connect: { email: agency.companyEmail },
         },
         ...agency,
-        SidebarOption: {
+        sidebarOptions: {
           create: [
             {
               name: 'Dashboard',

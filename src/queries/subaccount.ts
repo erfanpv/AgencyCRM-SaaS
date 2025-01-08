@@ -1,6 +1,6 @@
 'use server';
 
-import { db } from '@/lib/db';
+import  db  from '@/lib/db';
 import { Role, type SubAccount } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -29,7 +29,7 @@ export const upsertSubAccount = async (subAccount: SubAccount) => {
 
   const agencyOwner = await db.user.findFirst({
     where: {
-      Agency: {
+      agency: {
         id: subAccount.agencyId,
       },
       role: Role.AGENCY_OWNER,
@@ -49,7 +49,7 @@ export const upsertSubAccount = async (subAccount: SubAccount) => {
     update: subAccount,
     create: {
       ...subAccount,
-      Permissions: {
+      permissions: {
         create: {
           id: permissionId,
           access: true,
@@ -60,12 +60,12 @@ export const upsertSubAccount = async (subAccount: SubAccount) => {
           id: permissionId,
         },
       },
-      Pipeline: {
+      pipelines: {
         create: {
           name: 'Lead Cycle',
         },
       },
-      SidebarOption: {
+      sidebarOptions: {
         create: [
           {
             name: 'Launchpad',

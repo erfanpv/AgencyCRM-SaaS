@@ -71,43 +71,43 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
       ...data,
     },
   });
+  // console.log(form.formState.errors);
+
   const isSubmitting = form.formState.isSubmitting;
   //   const isLoading = isSubmitting || deletingAgency;
-
   React.useEffect(() => {
-    if (data) {
+    if (data?.id) {
+      // Ensure you're only updating form data when necessary.
       form.reset(data);
     }
-  }, [data]);
-
-  // Example in your AgencyDetails component
+  }, [data, form]);
 
   const onSubmit: SubmitHandler<AgencyDetailsSchema> = async values => {
     try {
       let customerId: string | undefined;
       if (!data?.id) {
         // create Stripe customer if there is no agency
-        // const bodyData = {
-        //   email: values.companyEmail,
-        //   name: values.name,
-        //   shipping: {
-        //     address: {
-        //       city: values.city,
-        //       country: values.country,
-        //       line1: values.address,
-        //       postal_code: values.zipCode,
-        //       state: values.zipCode,
-        //     },
-        //     name: values.name,
-        //   },
-        //   address: {
-        //     city: values.city,
-        //     country: values.country,
-        //     line1: values.address,
-        //     postal_code: values.zipCode,
-        //     state: values.zipCode,
-        //   },
-        // };
+        const bodyData = {
+          email: values.companyEmail,
+          name: values.name,
+          shipping: {
+            address: {
+              city: values.city,
+              country: values.country,
+              line1: values.address,
+              postal_code: values.zipCode,
+              state: values.zipCode,
+            },
+            name: values.name,
+          },
+          address: {
+            city: values.city,
+            country: values.country,
+            line1: values.address,
+            postal_code: values.zipCode,
+            state: values.zipCode,
+          },
+        };
       }
 
       await initUser({ role: Role.AGENCY_OWNER });
@@ -155,7 +155,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
     // TODO: discontinue the subscription for the user
 
     try {
-     await deleteAgency(data.id);
+      await deleteAgency(data.id);
 
       toast.success('Deleted Agency', {
         description: 'Deleted your agency and all related subaccounts.',
@@ -163,7 +163,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
 
       router.refresh();
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast.error('Oppse!', {
         description: 'Could not delete your agency. Please try again.',
       });
@@ -188,7 +188,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
-                // disabled={isSubmitting}
+                disabled={isSubmitting}
                 control={form.control}
                 name="agencyLogo"
                 render={({ field }) => (
@@ -207,7 +207,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
               />
               <div className="flex gap-4 md:flex-row">
                 <FormField
-                  // disabled={isSubmitting}
+                  disabled={isSubmitting}
                   control={form.control}
                   name="name"
                   render={({ field }) => (
@@ -225,7 +225,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
                   )}
                 />
                 <FormField
-                  // disabled={isSubmitting}
+                  disabled={isSubmitting}
                   control={form.control}
                   name="companyEmail"
                   render={({ field }) => (
@@ -240,7 +240,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
                 />
               </div>
               <FormField
-                // disabled={isSubmitting}
+                disabled={isSubmitting}
                 control={form.control}
                 name="companyPhone"
                 render={({ field }) => (
@@ -257,7 +257,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
                 )}
               />
               <FormField
-                // disabled={isSubmitting}
+                disabled={isSubmitting}
                 control={form.control}
                 name="whiteLabel"
                 render={({ field }) => {
@@ -284,7 +284,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
                 }}
               />
               <FormField
-                // disabled={isSubmitting}
+                disabled={isSubmitting}
                 control={form.control}
                 name="address"
                 render={({ field }) => (
@@ -299,7 +299,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
               />
               <div className="flex gap-4 md:flex-row">
                 <FormField
-                  // disabled={isSubmitting}
+                  disabled={isSubmitting}
                   control={form.control}
                   name="city"
                   render={({ field }) => (
@@ -313,7 +313,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
                   )}
                 />
                 <FormField
-                  // disabled={isSubmitting}
+                  disabled={isSubmitting}
                   control={form.control}
                   name="state"
                   render={({ field }) => (
@@ -327,7 +327,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
                   )}
                 />
                 <FormField
-                  // disabled={isSubmitting}
+                  disabled={isSubmitting}
                   control={form.control}
                   name="zipCode"
                   render={({ field }) => (
@@ -342,7 +342,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
                 />
               </div>
               <FormField
-                // disabled={isSubmitting}
+                disabled={isSubmitting}
                 control={form.control}
                 name="country"
                 render={({ field }) => (
@@ -364,7 +364,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
                     your goals grow too so dont forget to set the bar higher!
                   </FormDescription>
                   <NumberInput
-                    defaultValue={data.goal}
+                    defaultValue={data.goal || '5'}
                     min={1}
                     className="rounded-md !border !border-input !bg-background text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     placeholder="Sub Account Goal"
@@ -385,11 +385,7 @@ const AgencyDetails: React.FC<AgencyDetailsProps> = ({ data }) => {
                 </div>
               )}
               <div className="flex justify-end">
-                <Button
-                  type="submit"
-                  // isLoading={isSubmitting}
-                  // disabled={isSubmitting}
-                >
+                <Button type="submit" disabled={isSubmitting}>
                   Save Agency Information
                 </Button>
               </div>

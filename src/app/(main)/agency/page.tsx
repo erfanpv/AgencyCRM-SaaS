@@ -19,10 +19,12 @@ const AgencyPage: React.FC<AgencyPageProps> = async ({ searchParams }) => {
   const authUser = await currentUser();
 
   const agencyId = await verifyAndAcceptInvitation();
+
   const user = await getAuthUserDetails();
 
   const isSubAccountUser =
     user?.role === Role.SUBACCOUNT_GUEST || user?.role === Role.SUBACCOUNT_USER;
+
   const isAgencyUser =
     user?.role === Role.AGENCY_OWNER || user?.role === Role.AGENCY_ADMIN;
 

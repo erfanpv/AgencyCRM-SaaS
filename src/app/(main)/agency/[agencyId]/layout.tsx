@@ -15,13 +15,16 @@ interface AgencyIdLayoutProps extends React.PropsWithChildren {
 }
 
 const AgencyIdLayout: React.FC<AgencyIdLayoutProps> = async ({
-  params,
+  params ,
   children,
 }) => {
   const user = await currentUser();
-  const agencyId = await verifyAndAcceptInvitation();
+
 
   if (!user) redirect('/');
+
+  const agencyId = await verifyAndAcceptInvitation();
+
   if (!agencyId || !params.agencyId) redirect('/agency');
 
   if (
@@ -40,7 +43,7 @@ const AgencyIdLayout: React.FC<AgencyIdLayoutProps> = async ({
         <InfoBar
           notifications={notifications?.map(notification => ({
             ...notification,
-            user: notification.User,
+            user: notification.user,
           }))}
           subAccountId={user.id}
           role={user.privateMetadata.role}

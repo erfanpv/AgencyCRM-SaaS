@@ -1,6 +1,6 @@
 'use server';
 import { currentUser } from '@clerk/nextjs/server';
-import { db } from '@/lib/db';
+import  db  from '@/lib/db';
 import { logger } from '@/lib/utils';
 // import { type NotificationsWithUser } from '@/lib/types';
 
@@ -19,8 +19,8 @@ export const saveActivityLogsNotification = async ({
   if (!authUser) {
     const response = await db.user.findFirst({
       where: {
-        Agency: {
-          SubAccount: {
+        agency: {
+          subAccounts: {
             some: { id: subaccountId },
           },
         },
@@ -56,17 +56,17 @@ export const saveActivityLogsNotification = async ({
     await db.notification.create({
       data: {
         notification: `${userData.name} | ${description}`,
-        User: {
+        user: {
           connect: {
             id: userData.id,
           },
         },
-        Agency: {
+        agency: {
           connect: {
             id: foundAgencyId,
           },
         },
-        SubAccount: {
+        subAccount: {
           connect: { id: subaccountId },
         },
       },
@@ -75,12 +75,12 @@ export const saveActivityLogsNotification = async ({
     await db.notification.create({
       data: {
         notification: `${userData.name} | ${description}`,
-        User: {
+        user: {
           connect: {
             id: userData.id,
           },
         },
-        Agency: {
+        agency: {
           connect: {
             id: foundAgencyId,
           },
@@ -98,7 +98,7 @@ export const getNotification = async (agencyId: string) => {
         agencyId,
       },
       include: {
-        User: true,
+        user: true,
       },
       orderBy: {
         createdAt: 'desc',
