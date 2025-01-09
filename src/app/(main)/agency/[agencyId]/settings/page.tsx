@@ -33,7 +33,7 @@ const AgencySettingsPage: React.FC<AgencySettingsPageProps> = async ({
 
   if (!agencyDetails) redirect('/agency/unauthorized');
 
-  const subAccounts = agencyDetails.SubAccount;
+  const subAccounts = agencyDetails.subAccounts;
 
   return (
     <div className="mx-auto flex w-full max-w-4xl flex-col gap-4">
