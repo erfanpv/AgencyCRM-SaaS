@@ -1,6 +1,6 @@
 'use server';
 
-import  db  from '@/lib/db';
+import db from '@/lib/db';
 import { Role, type SubAccount } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -87,11 +87,11 @@ export const upsertSubAccount = async (subAccount: SubAccount) => {
             icon: 'database',
             link: `/subaccount/${subAccount.id}/media`,
           },
-          {
-            name: 'Automations',
-            icon: 'chip',
-            link: `/subaccount/${subAccount.id}/automations`,
-          },
+          // {
+          //   name: 'Automations',
+          //   icon: 'chip',
+          //   link: `/subaccount/${subAccount.id}/automations`,
+          // },
           {
             name: 'Pipelines',
             icon: 'flag',
@@ -109,6 +109,21 @@ export const upsertSubAccount = async (subAccount: SubAccount) => {
           },
         ],
       },
+    },
+  });
+
+  return response;
+};
+
+export const deleteSubAccount = async (subAccountId: string) => {
+  const response = await db.subAccount.delete({
+    where: {
+      id: subAccountId,
+    },
+  });
+  const deletePermissions = await db.permissions.deleteMany({
+    where: {
+      subAccountId,
     },
   });
 

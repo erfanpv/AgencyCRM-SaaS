@@ -1,6 +1,6 @@
 'use server';
 import { currentUser } from '@clerk/nextjs/server';
-import  db  from '@/lib/db';
+import db from '@/lib/db';
 import { logger } from '@/lib/utils';
 // import { type NotificationsWithUser } from '@/lib/types';
 
