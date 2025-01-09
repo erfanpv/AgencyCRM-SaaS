@@ -86,11 +86,11 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({
 
       if (!response) throw new Error('No response from server');
 
-      await saveActivityLogsNotification({
-        agencyId: response.agencyId,
-        description: `${userName} | Updated subaccount | ${response.name}`,
-        subaccountId: response.id,
-      });
+      // await saveActivityLogsNotification({
+      //   agencyId: response.agencyId,
+      //   description: `${userName} | Updated subaccount | ${response.name}`,
+      //   subaccountId: response.id,
+      // });
 
       toast.success('Subaccount details saved', {
         description: 'Successfully saved your subaccount details.',
@@ -203,7 +203,7 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({
                 <FormItem className="flex-1">
                   <FormLabel>Address</FormLabel>
                   <FormControl>
-                    <Input placeholder="20 Cooper Square" {...field} />
+                    <Input placeholder="123 st..." {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -218,7 +218,7 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({
                   <FormItem className="flex-1">
                     <FormLabel>City</FormLabel>
                     <FormControl>
-                      <Input placeholder="Dracut" {...field} />
+                      <Input placeholder="City" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -232,7 +232,7 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({
                   <FormItem className="flex-1">
                     <FormLabel>State</FormLabel>
                     <FormControl>
-                      <Input placeholder="Massachusetts" {...field} />
+                      <Input placeholder="State" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -246,7 +246,7 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({
                   <FormItem className="flex-1">
                     <FormLabel>Zip Code</FormLabel>
                     <FormControl>
-                      <Input placeholder="MA 01826" {...field} />
+                      <Input placeholder="Zipcode" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -261,7 +261,7 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({
                 <FormItem className="flex-1">
                   <FormLabel>Country</FormLabel>
                   <FormControl>
-                    <Input placeholder="United States" {...field} />
+                    <Input placeholder="Country" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

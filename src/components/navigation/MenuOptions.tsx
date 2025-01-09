@@ -243,7 +243,7 @@ const MenuOptions: React.FC<MenuOptionsProps> = ({
                               subTitle="You can switch between your agency account and the subaccount from the sidebar"
                             >
                               <SubAccountDetails
-                                agencyDetails={user.Agency!}
+                                agencyDetails={user.agency!}
                                 userId={user.id}
                                 userName={user.name}
                               />
