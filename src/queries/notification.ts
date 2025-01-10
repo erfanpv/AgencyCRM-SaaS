@@ -12,7 +12,7 @@ export const saveActivityLogsNotification = async ({
 }: {
   agencyId?: string;
   description: string;
-  subaccountId?: string;
+  subaccountId?: string | undefined;
 }) => {
   const authUser = await currentUser();
   let userData;

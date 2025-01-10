@@ -1,9 +1,50 @@
 'use server';
 import db from '@/lib/db';
-import { clerkClient, currentUser } from '@clerk/nextjs/server';
+import { currentUser } from '@clerk/nextjs/server';
+import { clerkClient } from '@clerk/clerk-sdk-node';
 import { redirect } from 'next/navigation';
 import { createTeamUser } from './auth';
 import { saveActivityLogsNotification } from './notification';
+import { Role } from '@prisma/client';
+import { logger } from '@/lib/utils';
+
+export const sendInvitation = async (
+  role: Role,
+  email: string,
+  agencyId: string,
+) => {
+  console.log("jjjj",role)
+  const user = await db.user.findUnique({
+    where: {
+      email,
+    },
+  });
+
+  if (user?.role === role) {
+    throw new Error('This user already have this role');
+  }
+
+  const resposne = await db.invitation.create({
+    data: { email, agencyId, role },
+  });
+
+  try {
+    await clerkClient.invitations.createInvitation({
+      emailAddress: email,
+      redirectUrl: process.env.NEXT_PUBLIC_URL,
+      ignoreExisting: true,
+      publicMetadata: {
+        throughInvitation: true,
+        role,
+      },
+    });
+  } catch (error) {
+    logger(error);
+    throw error;
+  }
+
+  return resposne;
+};
 
 // Handles accepting user invitations and linking them to an agency.
 export const verifyAndAcceptInvitation = async () => {

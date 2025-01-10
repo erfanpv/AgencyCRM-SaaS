@@ -105,3 +105,33 @@ export const updateUser = async (user: Partial<User>) => {
 
   return response;
 };
+
+
+export const getAuthUserGroup = async (agencyId: string) => {
+  const teamMembers = await db.user.findMany({
+    where: {
+      agency: {
+        id: agencyId,
+      },
+    },
+    include: {
+      agency: { include: { subAccounts: true } },
+      permissions: { include: { subAccount: true } },
+    },
+  });
+
+  return teamMembers;
+};
+
+
+export const deleteUser = async (userId: string) => {
+  await clerkClient.users.updateUserMetadata(userId, {
+    privateMetadata: {
+      role: undefined,
+    },
+  });
+  await clerkClient.users.deleteUser(userId);
+  const deletedUser = await db.user.delete({ where: { id: userId } });
+
+  return deletedUser;
+};
