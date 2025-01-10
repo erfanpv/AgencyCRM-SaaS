@@ -1,11 +1,10 @@
+import React from 'react';
+import { redirect } from 'next/navigation';
 
-import React from "react";
-import { redirect } from "next/navigation";
+import { getMedia } from '@/queries/media';
 
-// import { getMedia } from "@/queries/media";
-
-import BlurPage from "@/components/global/BlurPage";
-// import Media from "@/components/modules/media/Media";
+import BlurPage from '@/components/global/BlurPage';
+import Media from '@/components/modules/media/Media';
 
 interface MediaPageProps {
   params: {
@@ -18,14 +17,14 @@ const MediaPage: React.FC<MediaPageProps> = async ({ params }) => {
 
   if (!subaccountId) redirect(`/subaccount/unauthorized`);
 
-  // const media = await getMedia(subaccountId);
+  const media = await getMedia(subaccountId);
+
 
   return (
     <BlurPage>
-      {/* <Media data={media} subAccountId={subaccountId} /> */}
+      <Media data={media} subAccountId={subaccountId} />
     </BlurPage>
   );
 };
 
 export default MediaPage;
-

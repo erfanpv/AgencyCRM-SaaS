@@ -10,7 +10,7 @@ export const saveActivityLogsNotification = async ({
   description,
   subaccountId,
 }: {
-  agencyId?: string;
+  agencyId?: string | undefined;
   description: string;
   subaccountId?: string | undefined;
 }) => {
