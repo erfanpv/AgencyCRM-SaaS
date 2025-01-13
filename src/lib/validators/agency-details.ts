@@ -1,7 +1,9 @@
 import { z } from 'zod';
 
 export const AgencyDetailsValidator = z.object({
-  name: z.string().min(2, { message: 'Agency name must be at least 2 characters.' }),
+  name: z
+    .string()
+    .min(2, { message: 'Agency name must be at least 2 characters.' }),
   companyEmail: z.string().email({ message: 'Invalid email address.' }),
   companyPhone: z.string().min(5, {
     message: 'Phone number must be at least 5 characters.',
