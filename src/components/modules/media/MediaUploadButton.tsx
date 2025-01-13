@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import React from "react";
-import { Upload } from "lucide-react";
+import React from 'react';
+import { Upload } from 'lucide-react';
 
-import { useModal } from "@/hooks/use-modal";
-import { Button } from "../../ui/button";
-import CustomModal from "@/components/global/CustomModal";
-import UploadMediaForm from "@/components/forms/UploadMediaForm";
+import { useModal } from '@/hooks/use-modal';
+import { Button } from '../../ui/button';
+import CustomModal from '@/components/global/CustomModal';
+import UploadMediaForm from '@/components/forms/UploadMediaForm';
 
 interface MediaUploadButtonProps {
   subAccountId: string;
@@ -27,12 +27,12 @@ const MediaUploadButton: React.FC<MediaUploadButtonProps> = ({
             scrollShadow={false}
           >
             <UploadMediaForm subAccountId={subAccountId} />
-          </CustomModal>
+          </CustomModal>,
         )
       }
       className="inline-flex items-center gap-2"
     >
-      <Upload className="w-4 h-4" />
+      <Upload className="h-4 w-4" />
       Upload media
     </Button>
   );

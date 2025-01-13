@@ -22,7 +22,7 @@ const TeamPage: React.FC<TeamPageProps> = async ({ params }) => {
   if (!agencyId) redirect('/agency/unauthorized');
 
   const teamMembers = await getAuthUserGroup(agencyId);
-  
+
   if (!teamMembers) redirect('/agency/sign-in');
 
   const agencyDetails = await getAgencyDetails(agencyId);

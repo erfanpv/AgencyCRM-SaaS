@@ -32,7 +32,7 @@ const SubAccountPage: React.FC<SubAccountPageProps> = async ({
     redirect(`/subaccount/${stateSubAccountId}/${statePath}?code=${code}`);
   }
 
-  const firstSubAccountWithAccess = user.permissions.find( 
+  const firstSubAccountWithAccess = user.permissions.find(
     permission => permission.access === true,
   );
 

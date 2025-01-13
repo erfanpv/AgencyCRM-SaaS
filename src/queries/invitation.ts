@@ -13,7 +13,7 @@ export const sendInvitation = async (
   email: string,
   agencyId: string,
 ) => {
-  console.log("jjjj",role)
+  console.log('jjjj', role);
   const user = await db.user.findUnique({
     where: {
       email,

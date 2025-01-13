@@ -19,7 +19,6 @@ const MediaPage: React.FC<MediaPageProps> = async ({ params }) => {
 
   const media = await getMedia(subaccountId);
 
-
   return (
     <BlurPage>
       <Media data={media} subAccountId={subaccountId} />

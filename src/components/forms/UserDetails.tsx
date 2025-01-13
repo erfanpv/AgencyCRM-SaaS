@@ -135,20 +135,22 @@ const UserDetailsForm: React.FC<UserDetailsProps> = ({
       const updatedUser = await updateUser(values);
 
       // check if subaccount have permission and if it have save activity log
-      authUserData?.agency?.subAccounts.filter(subAccount => {
-        const isSubAccountHavePermission = authUserData.permissions.find(
-          permission =>
-            permission.subAccountId === subAccount.id && permission.access,
-        );
+      authUserData?.agency?.subAccounts
+        .filter(subAccount => {
+          const isSubAccountHavePermission = authUserData.permissions.find(
+            permission =>
+              permission.subAccountId === subAccount.id && permission.access,
+          );
 
-        return isSubAccountHavePermission;
-      }).forEach(async subaccount => {
-        await saveActivityLogsNotification({
-          agencyId: undefined,
-          description: `Updated ${userData?.name} information`,
-          subaccountId: subaccount.id,
+          return isSubAccountHavePermission;
+        })
+        .forEach(async subaccount => {
+          await saveActivityLogsNotification({
+            agencyId: undefined,
+            description: `Updated ${userData?.name} information`,
+            subaccountId: subaccount.id,
+          });
         });
-      });
 
       if (updatedUser) {
         toast.success('Success', {

@@ -56,7 +56,7 @@ const LaunchPagPageage: React.FC<LaunchPagPageageProps> = async ({
   //   "agency",
   //   `launchpad___${agencyDetails.id}`
   // );
-  
+
   let connectedStripeAccount: boolean = false;
 
   // if (code) {

@@ -15,11 +15,10 @@ interface AgencyIdLayoutProps extends React.PropsWithChildren {
 }
 
 const AgencyIdLayout: React.FC<AgencyIdLayoutProps> = async ({
-  params ,
+  params,
   children,
 }) => {
   const user = await currentUser();
-
 
   if (!user) redirect('/');
 

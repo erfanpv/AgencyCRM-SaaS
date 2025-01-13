@@ -106,7 +106,6 @@ export const updateUser = async (user: Partial<User>) => {
   return response;
 };
 
-
 export const getAuthUserGroup = async (agencyId: string) => {
   const teamMembers = await db.user.findMany({
     where: {
@@ -122,7 +121,6 @@ export const getAuthUserGroup = async (agencyId: string) => {
 
   return teamMembers;
 };
-
 
 export const deleteUser = async (userId: string) => {
   await clerkClient.users.updateUserMetadata(userId, {

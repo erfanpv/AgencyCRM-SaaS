@@ -4,9 +4,7 @@ import Image from 'next/image';
 import { redirect } from 'next/navigation';
 import { CheckCircle2 } from 'lucide-react';
 
-import {
-  getSubAccountDetails,
-} from '@/queries/subaccount';
+import { getSubAccountDetails } from '@/queries/subaccount';
 
 import {
   Card,
@@ -122,15 +120,14 @@ const LaunchpadPage: React.FC<LaunchpadPageProps> = async ({
                     used to run payouts.
                   </p>
                 </div>
-                {subAccountDetails.connectAccountId ||
-                false ? (
+                {subAccountDetails.connectAccountId || false ? (
                   <CheckCircle2
                     role="status"
                     aria-label="Done"
                     className="h-12 w-12 flex-shrink-0 p-2 text-emerald-500"
                   />
                 ) : (
-                  <Link className={buttonVariants()} href={""}>
+                  <Link className={buttonVariants()} href={''}>
                     Start
                   </Link>
                 )}
