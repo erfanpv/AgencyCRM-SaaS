@@ -76,6 +76,8 @@ const PipelineView: React.FC<PipelineViewProps> = ({
           direction="horizontal"
           key="lanes"
           isDropDisabled={false}
+          isCombineEnabled={false}
+          ignoreContainerClipping={false}
         >
           {provided => (
             <div

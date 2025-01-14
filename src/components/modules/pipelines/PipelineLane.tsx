@@ -180,6 +180,8 @@ const PipelineLane: React.FC<PipelaneLaneProps> = ({
                     key={laneDetails.id}
                     type="ticket"
                     isDropDisabled={false}
+                    isCombineEnabled={false}
+                    ignoreContainerClipping={false}
                   >
                     {(provided) => (
                       <div

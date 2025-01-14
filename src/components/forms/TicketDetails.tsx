@@ -74,7 +74,7 @@ const TicketDetails: React.FC<TicketDetailsProps> = ({
     defaultData?.ticket?.assigned?.id || '',
   );
 
-  const saveTimerRef = React.useRef<ReturnType<typeof setTimeout>>();
+  const saveTimerRef = React.useRef<NodeJS.Timeout | null>(null);
 
   const form = useForm<TicketDetailsSchema>({
     resolver: zodResolver(TicketDetailsValidator),
@@ -103,7 +103,7 @@ const TicketDetails: React.FC<TicketDetailsProps> = ({
       form.reset({
         name: defaultData.ticket.name || '',
         description: defaultData.ticket.description || '',
-        value: String(defaultData.ticket.value || 0),
+        value: String(defaultData.ticket.value?.toNumber() || 0),
       });
 
       if (defaultData.ticket.customerId) {
