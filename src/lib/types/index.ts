@@ -2,7 +2,7 @@ import { getAuthUserDetails } from '@/queries/auth';
 import { getMedia } from '@/queries/media';
 import { getUserWithPermissionsAndSubAccount } from '@/queries/permission';
 import { getPipelineDetails } from '@/queries/pipelines';
-import { getTicketsWithTags } from '@/queries/tickets';
+import { getTicketDetails, getTicketsWithTags } from '@/queries/tickets';
 import type {
   Contact,
   Lane,
@@ -47,3 +47,7 @@ export type PipelineDetailsWithLanesCardsTagsTickets = Prisma.PromiseReturnType<
 export type TicketsWithTags = Prisma.PromiseReturnType<
   typeof getTicketsWithTags
 >;
+
+export type TicketDetails = Prisma.PromiseReturnType<typeof getTicketDetails>;
+
+// export type PriceList = Stripe.ApiList<Stripe.Price>;
